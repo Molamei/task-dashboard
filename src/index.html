@@ -34,11 +34,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- Fonts: CLI will inline @font-face in production (fonts.inline: true in angular.json) -->
+    <!-- display=optional: use Inter if ready within ~100ms, otherwise keep system font — eliminates CLS -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=optional"
       rel="stylesheet"
     />
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <!-- display=block: icons are invisible briefly but never cause a layout shift -->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons&display=block"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <app-root></app-root>

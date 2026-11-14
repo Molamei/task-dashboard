@@ -9,11 +9,31 @@ import {
   OnDestroy,
   viewChild,
 } from '@angular/core';
-import { Chart, ChartConfiguration, registerables } from 'chart.js';
+import {
+  ArcElement,
+  BarController,
+  BarElement,
+  CategoryScale,
+  Chart,
+  ChartConfiguration,
+  DoughnutController,
+  Legend,
+  LinearScale,
+  Tooltip,
+} from 'chart.js';
 import { Task } from '../../../core/types/task.types';
 import { TASK_PRIORITY_COLORS, TASK_STATUS_COLORS } from '../../../core/types/constants';
 
-Chart.register(...registerables);
+Chart.register(
+  DoughnutController,
+  BarController,
+  ArcElement,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+  Legend,
+  Tooltip,
+);
 
 /**
  * Presentational component that renders two Chart.js visualisations:

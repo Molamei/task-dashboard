@@ -45,8 +45,12 @@
 
   <!-- Analytics + Activity row -->
   <div class="bottom-row mt-4">
-    @if (allTasks$ | async; as allTasks) {
-      <app-analytics class="bottom-row__analytics" [tasks]="allTasks" />
+    @defer (on viewport; prefetch on idle) {
+      @if (allTasks$ | async; as allTasks) {
+        <app-analytics class="bottom-row__analytics" [tasks]="allTasks" />
+      }
+    } @placeholder {
+      <div class="bottom-row__analytics analytics-placeholder" aria-hidden="true"></div>
     }
 
     @if (activityEvents$ | async; as events) {
