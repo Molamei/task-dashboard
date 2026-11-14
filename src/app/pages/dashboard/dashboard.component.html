@@ -1,22 +1,84 @@
 <div class="dashboard">
-  <div class="stats-row d-flex gap-4">
-    @for (stat of statistics$ | async; track stat.id) {
-      <app-stat-card [stat]="stat" />
+  <!-- Statistics row -->
+  <div class="stats-row">
+    @if (statisticsLoading$ | async) {
+      @for (_ of [1, 2, 3, 4]; track $index) {
+        <div class="stat-skeleton">
+          <app-skeleton height="20px" width="60%" />
+          <app-skeleton height="36px" width="40%" borderRadius="6px" />
+          <app-skeleton height="14px" width="50%" />
+        </div>
+      }
+    } @else {
+      @for (stat of statistics$ | async; track stat.id) {
+        <app-stat-card [stat]="stat" />
+      }
     }
   </div>
 
+  <!-- Filter bar -->
   <app-task-filter-bar
     class="mt-4"
-    [activeStatus]="activeStatus"
-    [activePriority]="activePriority"
+    [activeStatus]="activeStatus()"
+    [activePriority]="activePriority()"
     (statusChange)="onStatusChange($event)"
     (priorityChange)="onPriorityChange($event)"
     (newTask)="onNewTask()"
   />
 
+  <!-- Task board -->
   @if (filteredTasks$ | async; as tasks) {
     @if (taskCounts$ | async; as counts) {
-      <app-task-board class="mt-4 d-block" [tasks]="tasks" [counts]="counts" />
+      <app-task-board
+        class="mt-4 d-block"
+        [tasks]="tasks"
+        [counts]="counts"
+        [loading]="!!(tasksLoading$ | async)"
+        (editTask)="onEditTask($event)"
+        (deleteTask)="onDeleteTask($event)"
+      />
     }
   }
+
+  <!-- Analytics + Activity row -->
+  <div class="bottom-row mt-4">
+    @if (allTasks$ | async; as allTasks) {
+      <app-analytics class="bottom-row__analytics" [tasks]="allTasks" />
+    }
+
+    @if (activityEvents$ | async; as events) {
+      <div class="bottom-row__activity">
+        <app-activity-feed [events]="events" />
+        @if (events.length > 0) {
+          <button class="clear-activity-btn" type="button" (click)="onClearActivity()">
+            Clear activity
+          </button>
+        }
+      </div>
+    }
+  </div>
 </div>
+
+<!-- Task form modal (create / edit) -->
+@if (modalMode() !== null) {
+  <app-task-form-modal
+    [task]="taskToEdit()"
+    (saved)="onModalSave($event)"
+    (closed)="closeModal()"
+  />
+}
+
+<!-- Delete confirmation dialog -->
+@if (taskToDelete() !== null) {
+  <app-confirm-dialog
+    title="Delete Task"
+    [message]="
+      'Are you sure you want to delete &quot;' +
+      taskToDelete()!.title +
+      '&quot;? This action cannot be undone.'
+    "
+    confirmLabel="Delete"
+    (confirmed)="onConfirmDelete()"
+    (cancelled)="onCancelDelete()"
+  />
+}

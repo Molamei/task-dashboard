@@ -1,0 +1,39 @@
+<div class="activity-feed">
+  <h3 class="activity-feed__title">Recent Activity</h3>
+
+  @if (enrichedEvents().length === 0) {
+    <div class="activity-feed__empty" role="status">
+      <span class="activity-feed__empty-icon" aria-hidden="true">📋</span>
+      <p>No activity yet. Start by creating a task.</p>
+    </div>
+  } @else {
+    <ul class="activity-feed__list" role="list" aria-label="Recent task activity">
+      @for (event of enrichedEvents(); track event.id) {
+        <li class="activity-item">
+          <span
+            class="activity-item__icon"
+            [style.color]="event.config.color"
+            [style.border-color]="event.config.color + '33'"
+            [style.background-color]="event.config.color + '15'"
+            aria-hidden="true"
+          >
+            {{ event.config.icon }}
+          </span>
+          <div class="activity-item__content">
+            <p class="activity-item__text">
+              Task
+              <strong>"{{ event.taskTitle }}"</strong>
+              was {{ event.config.label }}
+              @if (event.meta?.['status']) {
+                <span class="activity-item__badge">→ {{ event.meta?.['status'] | titlecase }}</span>
+              }
+            </p>
+            <time class="activity-item__time" [attr.datetime]="event.timestamp">
+              {{ event.timeAgo }}
+            </time>
+          </div>
+        </li>
+      }
+    </ul>
+  }
+</div>

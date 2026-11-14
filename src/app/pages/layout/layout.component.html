@@ -1,6 +1,6 @@
 <app-navbar (searchChange)="onSearch($event)" />
 <div class="layout__body">
-  <app-sidebar />
+  <app-sidebar (newTask)="onNewTask()" />
   <main class="layout__main">
     <router-outlet />
   </main>
