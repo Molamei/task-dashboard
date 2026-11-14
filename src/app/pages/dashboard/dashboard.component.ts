@@ -1,6 +1,7 @@
 import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
 import { TaskModalService } from '../../core/services/task-modal.service';
+import { UserApiService } from '../../core/services/user-api.service';
 import { Store } from '@ngrx/store';
 import { StatisticsActions } from '../../core/store/statistics/statistics.actions';
 import {
@@ -16,7 +17,13 @@ import {
   selectTaskCountByStatus,
   selectTasksLoading,
 } from '../../core/store/tasks/tasks.selectors';
-import { Task, TaskFormData, TaskPriority, TaskStatus } from '../../core/types/task.types';
+import {
+  Assignee,
+  Task,
+  TaskFormData,
+  TaskPriority,
+  TaskStatus,
+} from '../../core/types/task.types';
 import { StatCardComponent } from './stat-card/stat-card.component';
 import { TaskFilterBarComponent } from './task-filter-bar/task-filter-bar.component';
 import { TaskBoardComponent } from './tasks/task-board/task-board.component';
@@ -49,6 +56,7 @@ type ModalMode = 'create' | 'edit' | null;
 export class DashboardComponent implements OnInit {
   private readonly store = inject(Store);
   private readonly taskModal = inject(TaskModalService);
+  private readonly userApi = inject(UserApiService);
 
   constructor() {
     effect(() => {
@@ -69,6 +77,8 @@ export class DashboardComponent implements OnInit {
 
   protected readonly activeStatus = signal<StatusFilter>('all');
   protected readonly activePriority = signal<TaskPriority | null>(null);
+  protected readonly activeAssigneeId = signal<string | null>(null);
+  protected readonly assignees = signal<Assignee[]>([]);
 
   protected readonly modalMode = signal<ModalMode>(null);
   protected readonly taskToEdit = signal<Task | null>(null);
@@ -77,6 +87,7 @@ export class DashboardComponent implements OnInit {
   public ngOnInit(): void {
     this.store.dispatch(StatisticsActions.loadStatistics());
     this.store.dispatch(TaskActions.loadTasks());
+    this.userApi.getUsers().subscribe((users) => this.assignees.set(users));
   }
 
   protected onStatusChange(status: StatusFilter): void {
@@ -89,6 +100,11 @@ export class DashboardComponent implements OnInit {
   protected onPriorityChange(priority: TaskPriority | null): void {
     this.activePriority.set(priority);
     this.store.dispatch(TaskActions.setFilter({ filter: { priority } }));
+  }
+
+  protected onAssigneeChange(assigneeId: string | null): void {
+    this.activeAssigneeId.set(assigneeId);
+    this.store.dispatch(TaskActions.setFilter({ filter: { assigneeId } }));
   }
 
   protected onNewTask(): void {

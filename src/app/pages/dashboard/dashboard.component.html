@@ -21,8 +21,11 @@
     class="mt-4"
     [activeStatus]="activeStatus()"
     [activePriority]="activePriority()"
+    [activeAssigneeId]="activeAssigneeId()"
+    [assignees]="assignees()"
     (statusChange)="onStatusChange($event)"
     (priorityChange)="onPriorityChange($event)"
+    (assigneeChange)="onAssigneeChange($event)"
     (newTask)="onNewTask()"
   />
 

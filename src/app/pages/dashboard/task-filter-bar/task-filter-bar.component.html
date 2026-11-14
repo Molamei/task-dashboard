@@ -36,6 +36,40 @@
       }
     </div>
 
+    <div class="filter-bar__priority-wrapper">
+      <button
+        class="filter-bar__priority-btn"
+        [class.filter-bar__priority-btn--active]="activeAssigneeId() !== null"
+        (click)="assigneeDropdownOpen = !assigneeDropdownOpen"
+      >
+        {{ activeAssigneeName }} ▾
+      </button>
+      @if (assigneeDropdownOpen) {
+        <ul class="filter-bar__dropdown">
+          <li>
+            <button
+              class="filter-bar__dropdown-item"
+              [class.filter-bar__dropdown-item--active]="activeAssigneeId() === null"
+              (click)="selectAssignee(null)"
+            >
+              All
+            </button>
+          </li>
+          @for (a of assignees(); track a.id) {
+            <li>
+              <button
+                class="filter-bar__dropdown-item"
+                [class.filter-bar__dropdown-item--active]="activeAssigneeId() === a.id"
+                (click)="selectAssignee(a.id)"
+              >
+                {{ a.name }}
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
     <button class="filter-bar__new-task-btn" (click)="newTask.emit()">+ New Task</button>
   </div>
 </div>
