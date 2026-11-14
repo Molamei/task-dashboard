@@ -40,6 +40,23 @@ export const PRIORITY_FILTER_OPTIONS = [
   })),
 ];
 
+/** Cycling palette used to colour assignee avatar initials by numeric ID. */
+export const AVATAR_COLORS = ['#3B82F6', '#22C55E', '#F97316', '#8B5CF6', '#06B6D4'] as const;
+
+/** Card hover-shadow colour per task status. */
+export const TASK_STATUS_SHADOW: Record<TaskStatus, string> = {
+  todo: 'rgba(25, 118, 210, 0.35)',
+  in_progress: 'rgba(255, 111, 0, 0.35)',
+  done: 'rgba(56, 142, 60, 0.35)',
+};
+
+/** Badge background and text colour per priority level. */
+export const TASK_PRIORITY_BADGE: Record<TaskPriority, { bg: string; color: string }> = {
+  high: { bg: '#D32F2F', color: '#FFFFFF' },
+  medium: { bg: '#FEF3C7', color: '#D97706' },
+  low: { bg: '#DCFCE7', color: '#16A34A' },
+};
+
 export const API_ENDPOINTS = {
   tasks: 'api/tasks',
   statistics: 'api/statistics',

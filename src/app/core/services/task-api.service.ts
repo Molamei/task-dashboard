@@ -7,6 +7,14 @@ import { API_ENDPOINTS } from '../types/constants';
 import { StatisticsResponse } from '../types/statistic.types';
 import { Assignee, Task, TaskFormData, TasksResponse } from '../types/task.types';
 
+/**
+ * Handles all HTTP communication with the task API.
+ *
+ * Uses Angular's `httpResource` for signal-based reactive data fetching and
+ * provides Observable bridges for NgRx Effects integration. Mutations (create,
+ * update, delete) go through `HttpClient` directly and call `.reload()` on the
+ * relevant resource to keep the signal state in sync.
+ */
 @Injectable({ providedIn: 'root' })
 export class TaskApiService {
   private readonly http = inject(HttpClient);
@@ -21,8 +29,12 @@ export class TaskApiService {
   readonly statisticsResource = httpResource<StatisticsResponse>(() => API_ENDPOINTS.statistics);
 
   /**
-   * Observable bridge for NgRx Effects. Calls reload() to ensure fresh data, then
-   * waits for the resource to finish loading before emitting exactly once.
+   * Observable bridge for NgRx Effects. Triggers a resource reload, then waits
+   * for the loading flag to settle before emitting a single `TasksResponse`.
+   * Propagates any resource-level error as an Observable error so Effects can
+   * dispatch `loadTasksFailure`.
+   *
+   * @returns Observable that emits once with the full tasks payload.
    */
   getTasks(): Observable<TasksResponse> {
     if (!this.tasksResource.isLoading()) {
@@ -45,6 +57,11 @@ export class TaskApiService {
     );
   }
 
+  /**
+   * Observable bridge for the statistics resource — mirrors the `getTasks` pattern.
+   *
+   * @returns Observable that emits once with the current statistics payload.
+   */
   getStatistics(): Observable<StatisticsResponse> {
     if (!this.statisticsResource.isLoading()) {
       this.statisticsResource.reload();
@@ -62,10 +79,27 @@ export class TaskApiService {
     );
   }
 
+  /**
+   * Fetches a single task by its ID.
+   *
+   * @param id - The unique task identifier (e.g. `"task-001"`).
+   * @returns Observable that emits the matching `Task`.
+   */
   getTaskById(id: string): Observable<Task> {
     return this.http.get<Task>(`${API_ENDPOINTS.tasks}/${id}`);
   }
 
+  /**
+   * Creates a new task from the provided form data.
+   *
+   * Resolves the assignee object first via a GET to `/users/:id`, then POSTs the
+   * fully-formed `Task` entity. The ID is generated client-side because
+   * angular-in-memory-web-api cannot auto-generate IDs for collections whose
+   * existing IDs are non-numeric strings (e.g. `"task-001"`).
+   *
+   * @param formData - Validated form values from the task creation form.
+   * @returns Observable that emits the persisted `Task` returned by the API.
+   */
   createTask(formData: TaskFormData): Observable<Task> {
     return this.http.get<Assignee>(`${API_ENDPOINTS.users}/${formData.assigneeId}`).pipe(
       switchMap((assignee) => {
@@ -90,7 +124,19 @@ export class TaskApiService {
     );
   }
 
-  /** Sends the full merged entity via PUT to avoid wiping existing fields. */
+  /**
+   * Updates an existing task with partial form data.
+   *
+   * Sends the **full merged entity** via PUT rather than a PATCH to avoid wiping
+   * existing fields that the in-memory API doesn't support partial updates for.
+   * If `formData.assigneeId` is provided the assignee object is re-fetched;
+   * otherwise the existing assignee is reused to avoid a redundant network call.
+   *
+   * @param id       - ID of the task to update.
+   * @param existing - Current task snapshot used as the merge base.
+   * @param formData - Partial form values; only provided fields overwrite `existing`.
+   * @returns Observable that emits the updated `Task` returned by the API.
+   */
   updateTask(id: string, existing: Task, formData: Partial<TaskFormData>): Observable<Task> {
     const resolveAssignee$ = formData.assigneeId
       ? this.http.get<Assignee>(`${API_ENDPOINTS.users}/${formData.assigneeId}`)
@@ -114,6 +160,12 @@ export class TaskApiService {
     );
   }
 
+  /**
+   * Permanently deletes a task by ID.
+   *
+   * @param id - The unique identifier of the task to remove.
+   * @returns Observable that completes once the DELETE request succeeds.
+   */
   deleteTask(id: string): Observable<void> {
     return this.http.delete<void>(`${API_ENDPOINTS.tasks}/${id}`);
   }

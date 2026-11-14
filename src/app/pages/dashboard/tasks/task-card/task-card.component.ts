@@ -1,19 +1,10 @@
 import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
-import { Task, TaskPriority, TaskStatus } from '../../../../core/types/task.types';
-
-const AVATAR_COLORS = ['#3B82F6', '#22C55E', '#F97316', '#8B5CF6', '#06B6D4'];
-
-const STATUS_SHADOW: Record<TaskStatus, string> = {
-  todo: 'rgba(25, 118, 210, 0.35)',
-  in_progress: 'rgba(255, 111, 0, 0.35)',
-  done: 'rgba(56, 142, 60, 0.35)',
-};
-
-const PRIORITY_CONFIG: Record<TaskPriority, { bg: string; color: string }> = {
-  high: { bg: '#D32F2F', color: '#FFFFFF' },
-  medium: { bg: '#FEF3C7', color: '#D97706' },
-  low: { bg: '#DCFCE7', color: '#16A34A' },
-};
+import {
+  AVATAR_COLORS,
+  TASK_PRIORITY_BADGE,
+  TASK_STATUS_SHADOW,
+} from '../../../../core/types/constants';
+import { Task } from '../../../../core/types/task.types';
 
 @Component({
   selector: 'app-task-card',
@@ -29,9 +20,14 @@ export class TaskCardComponent {
 
   protected readonly menuOpen = signal(false);
 
-  protected readonly priorityStyle = computed(() => PRIORITY_CONFIG[this.task().priority]);
+  protected readonly priorityStyle = computed(() => TASK_PRIORITY_BADGE[this.task().priority]);
   protected readonly priorityLabel = computed(() => this.task().priority.toUpperCase());
 
+  /**
+   * Deterministically maps an assignee ID to a colour from `AVATAR_COLORS`.
+   * Strips non-digits from the ID string, converts to a number, then wraps
+   * around the palette using modulo so every assignee always gets the same colour.
+   */
   protected readonly avatarColor = computed(() => {
     const num = parseInt(this.task().assignee.id.replace(/\D/g, ''), 10);
     return AVATAR_COLORS[(num - 1) % AVATAR_COLORS.length];
@@ -41,12 +37,31 @@ export class TaskCardComponent {
     return '@' + this.task().assignee.name.split(' ')[0];
   });
 
+  /**
+   * Resolves the CSS `box-shadow` colour for the card's hover state.
+   * High-priority overdue tasks receive a red shadow to visually escalate
+   * urgency; all other cards use the status-based shadow from `STATUS_SHADOW`.
+   */
   protected readonly hoverShadowColor = computed(() => {
     const task = this.task();
     if (task.isOverdue && task.priority === 'high') return 'rgba(211, 47, 47, 0.35)';
-    return STATUS_SHADOW[task.status];
+    return TASK_STATUS_SHADOW[task.status];
   });
 
+  /**
+   * Computes a human-readable due-date label and a semantic `type` token for
+   * template styling. Evaluated branches in priority order:
+   *
+   * 1. **Completed** — task is `done` and has a `completedAt` timestamp.
+   *    Returns "Completed today / yesterday / N days ago".
+   * 2. **Overdue** — `isOverdue` flag is set (server-computed).
+   *    Returns "Overdue by N day(s)"; minimum of 1 day is enforced.
+   * 3. **Upcoming** — task is not yet due.
+   *    Returns "Due today / in 1 day / in N days / in 1 week / in N weeks".
+   *
+   * All date arithmetic is performed against midnight local time to avoid
+   * fractional-day artefacts caused by time components.
+   */
   protected readonly dueInfo = computed(() => {
     const task = this.task();
     const today = new Date();

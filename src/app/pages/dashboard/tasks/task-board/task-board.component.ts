@@ -3,10 +3,15 @@ import { Task } from '../../../../core/types/task.types';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { TASK_STATUS_LABELS } from '../../../../core/types/constants';
 
+/**
+ * Aggregated task counts per status column plus a cross-cutting overdue count.
+ * Provided by `selectTaskCountByStatus` and passed into the board as an input.
+ */
 export interface TaskCounts {
   todo: number;
   in_progress: number;
   done: number;
+  /** May overlap with `todo` / `in_progress` — based on the `isOverdue` flag. */
   overdue: number;
 }
 
@@ -29,6 +34,14 @@ export class TaskBoardComponent {
 
   private readonly priorityOrder: Record<string, number> = { high: 0, medium: 1, low: 2 };
 
+  /**
+   * Sorts a task array by priority (high → medium → low), using due date as a
+   * tiebreaker so that equal-priority tasks appear in ascending deadline order.
+   * Returns a new array; the original is not mutated.
+   *
+   * @param tasks - Tasks to sort (any status subset).
+   * @returns A new sorted array.
+   */
   private sortByPriority(tasks: Task[]): Task[] {
     return [...tasks].sort((a, b) => {
       const priorityDiff = this.priorityOrder[a.priority] - this.priorityOrder[b.priority];

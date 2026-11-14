@@ -2,6 +2,11 @@ import { ChangeDetectionStrategy, Component, computed, input } from '@angular/co
 import { TitleCasePipe } from '@angular/common';
 import { ActivityEvent, ActivityEventType } from '../../../core/types/activity.types';
 
+/**
+ * Display configuration for each activity event type.
+ * Centralising icon, colour, and verb here keeps the template logic-free and
+ * makes adding new event types a single-line change.
+ */
 const EVENT_CONFIG: Record<ActivityEventType, { icon: string; color: string; label: string }> = {
   task_created: { icon: '✚', color: '#388e3c', label: 'created' },
   task_updated: { icon: '✎', color: '#1976d2', label: 'updated' },
@@ -19,6 +24,10 @@ const EVENT_CONFIG: Record<ActivityEventType, { icon: string; color: string; lab
 export class ActivityFeedComponent {
   readonly events = input.required<ActivityEvent[]>();
 
+  /**
+   * Augments each raw `ActivityEvent` with its display configuration and a
+   * pre-formatted relative time string so the template stays expression-free.
+   */
   protected readonly enrichedEvents = computed(() =>
     this.events().map((e) => ({
       ...e,
@@ -27,6 +36,15 @@ export class ActivityFeedComponent {
     })),
   );
 
+  /**
+   * Converts a Unix timestamp (ms) into a compact relative-time string.
+   *
+   * Resolution ladder: seconds → "just now", minutes → "Xm ago",
+   * hours → "Xh ago", days → "Xd ago". Exact thresholds: < 60 s, < 60 m, < 24 h.
+   *
+   * @param timestamp - Unix time in milliseconds.
+   * @returns Human-readable relative time string.
+   */
   private formatTimeAgo(timestamp: number): string {
     const diff = Date.now() - timestamp;
     const seconds = Math.floor(diff / 1000);

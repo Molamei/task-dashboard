@@ -33,9 +33,26 @@ import { ActivityFeedComponent } from './activity-feed/activity-feed.component';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 
+/** Extends `TaskStatus` with an `'all'` sentinel that disables the status filter. */
 type StatusFilter = TaskStatus | 'all';
+/** Tracks which form mode the task modal is currently in, or `null` when closed. */
 type ModalMode = 'create' | 'edit' | null;
 
+/**
+ * Smart container component for the main task dashboard.
+ *
+ * Responsibilities:
+ * - Dispatches initial data loads (`loadTasks`, `loadStatistics`) on init.
+ * - Owns the UI state for filter bar selections (status, priority, assignee),
+ *   syncing each change to both a local signal (for immediate template binding)
+ *   and the NgRx store (for `selectFilteredTasks` to recompute).
+ * - Controls the task-form modal lifecycle: decides whether a save results in a
+ *   `createTask` or `updateTask` dispatch based on `modalMode`.
+ * - Bridges the header's "New Task" button via `TaskModalService` using an
+ *   Angular `effect()` so the header need not import this component.
+ * - Coordinates the delete confirmation dialog, holding the pending task in a
+ *   signal until the user confirms or cancels.
+ */
 @Component({
   selector: 'app-dashboard',
   imports: [
@@ -59,6 +76,11 @@ export class DashboardComponent implements OnInit {
   private readonly userApi = inject(UserApiService);
 
   constructor() {
+    /**
+     * Reacts to the `TaskModalService.pendingOpen` signal set by the app header's
+     * "New Task" button. When truthy, the modal opens in create mode and the
+     * signal is immediately consumed so it doesn't re-fire on the next render.
+     */
     effect(() => {
       if (this.taskModal.pendingOpen()) {
         this.onNewTask();
@@ -121,6 +143,16 @@ export class DashboardComponent implements OnInit {
     this.taskToDelete.set(task);
   }
 
+  /**
+   * Handles the modal's save output event.
+   *
+   * Branches on `modalMode` to dispatch either `createTask` or `updateTask`.
+   * For updates, the current `taskToEdit` snapshot is passed alongside the form
+   * data so the effect can merge only the changed fields.
+   * The modal is closed unconditionally after dispatching.
+   *
+   * @param formData - Validated form values emitted by `TaskFormModalComponent`.
+   */
   protected onModalSave(formData: TaskFormData): void {
     const mode = this.modalMode();
     if (mode === 'create') {

@@ -15,6 +15,19 @@ import { TASK_PRIORITY_COLORS, TASK_STATUS_COLORS } from '../../../core/types/co
 
 Chart.register(...registerables);
 
+/**
+ * Presentational component that renders two Chart.js visualisations:
+ * a doughnut chart for task counts by priority and a bar chart by status.
+ *
+ * **Lifecycle:**
+ * - Charts are **created** in `ngAfterViewInit` once the canvas elements exist.
+ * - An Angular `effect()` in the constructor monitors the computed signal data
+ *   and **updates** existing chart datasets reactively as `tasks` changes.
+ *   The `initialized` flag prevents the effect from attempting an update before
+ *   the charts are created.
+ * - Charts are **destroyed** in `ngOnDestroy` to release Chart.js resources and
+ *   avoid memory leaks when the component is removed from the DOM.
+ */
 @Component({
   selector: 'app-analytics',
   imports: [],
@@ -32,6 +45,7 @@ export class AnalyticsComponent implements AfterViewInit, OnDestroy {
   private statusChart: Chart | null = null;
   private initialized = false;
 
+  /** Counts tasks per priority level; re-evaluated whenever `tasks` input changes. */
   protected readonly priorityData = computed(() => {
     const tasks = this.tasks();
     return {
@@ -41,6 +55,7 @@ export class AnalyticsComponent implements AfterViewInit, OnDestroy {
     };
   });
 
+  /** Counts tasks per status; re-evaluated whenever `tasks` input changes. */
   protected readonly statusData = computed(() => {
     const tasks = this.tasks();
     return {
@@ -51,6 +66,11 @@ export class AnalyticsComponent implements AfterViewInit, OnDestroy {
   });
 
   constructor() {
+    /**
+     * Reactive update loop — runs whenever `priorityData` or `statusData` signals
+     * change. Skipped before `ngAfterViewInit` completes (guarded by `initialized`)
+     * because Chart.js instances don't exist yet at construction time.
+     */
     effect(() => {
       const pd = this.priorityData();
       const sd = this.statusData();
@@ -60,17 +80,23 @@ export class AnalyticsComponent implements AfterViewInit, OnDestroy {
     });
   }
 
+  /** Creates both Chart.js instances once their canvas elements are in the DOM. */
   public ngAfterViewInit(): void {
     this.createPriorityChart();
     this.createStatusChart();
     this.initialized = true;
   }
 
+  /** Destroys Chart.js instances to free canvas contexts and avoid memory leaks. */
   public ngOnDestroy(): void {
     this.priorityChart?.destroy();
     this.statusChart?.destroy();
   }
 
+  /**
+   * Initialises the priority doughnut chart with the current `priorityData`
+   * snapshot. Uses a 65% cutout to render as a ring rather than a filled pie.
+   */
   private createPriorityChart(): void {
     const canvas = this.priorityCanvasRef()?.nativeElement;
     if (!canvas) return;
@@ -113,6 +139,11 @@ export class AnalyticsComponent implements AfterViewInit, OnDestroy {
     this.priorityChart = new Chart(canvas, config);
   }
 
+  /**
+   * Initialises the status bar chart with the current `statusData` snapshot.
+   * Rounded bars (`borderRadius: 6`, `borderSkipped: false`) give a pill shape
+   * on both ends of each bar.
+   */
   private createStatusChart(): void {
     const canvas = this.statusCanvasRef()?.nativeElement;
     if (!canvas) return;
@@ -160,12 +191,24 @@ export class AnalyticsComponent implements AfterViewInit, OnDestroy {
     this.statusChart = new Chart(canvas, config);
   }
 
+  /**
+   * Pushes new dataset values into the existing priority chart and triggers a
+   * re-render using the `'active'` animation mode for a smooth transition.
+   *
+   * @param pd - Latest priority counts from the computed signal.
+   */
   private updatePriorityChart(pd: ReturnType<typeof this.priorityData>): void {
     if (!this.priorityChart) return;
     this.priorityChart.data.datasets[0].data = [pd.high, pd.medium, pd.low];
     this.priorityChart.update('active');
   }
 
+  /**
+   * Pushes new dataset values into the existing status chart and triggers a
+   * re-render using the `'active'` animation mode for a smooth transition.
+   *
+   * @param sd - Latest status counts from the computed signal.
+   */
   private updateStatusChart(sd: ReturnType<typeof this.statusData>): void {
     if (!this.statusChart) return;
     this.statusChart.data.datasets[0].data = [sd.todo, sd.in_progress, sd.done];
