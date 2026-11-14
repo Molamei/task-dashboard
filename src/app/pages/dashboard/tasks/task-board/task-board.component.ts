@@ -27,11 +27,25 @@ export class TaskBoardComponent {
 
   protected readonly statusLabels = TASK_STATUS_LABELS;
 
-  protected readonly todoTasks = computed(() => this.tasks().filter((t) => t.status === 'todo'));
+  private readonly priorityOrder: Record<string, number> = { high: 0, medium: 1, low: 2 };
 
-  protected readonly inProgressTasks = computed(() =>
-    this.tasks().filter((t) => t.status === 'in_progress'),
+  private sortByPriority(tasks: Task[]): Task[] {
+    return [...tasks].sort((a, b) => {
+      const priorityDiff = this.priorityOrder[a.priority] - this.priorityOrder[b.priority];
+      if (priorityDiff !== 0) return priorityDiff;
+      return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+    });
+  }
+
+  protected readonly todoTasks = computed(() =>
+    this.sortByPriority(this.tasks().filter((t) => t.status === 'todo')),
   );
 
-  protected readonly doneTasks = computed(() => this.tasks().filter((t) => t.status === 'done'));
+  protected readonly inProgressTasks = computed(() =>
+    this.sortByPriority(this.tasks().filter((t) => t.status === 'in_progress')),
+  );
+
+  protected readonly doneTasks = computed(() =>
+    this.sortByPriority(this.tasks().filter((t) => t.status === 'done')),
+  );
 }
