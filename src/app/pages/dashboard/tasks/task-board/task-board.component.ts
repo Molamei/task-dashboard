@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { Task } from '../../../../core/types/task.types';
 import { TaskCardComponent } from '../task-card/task-card.component';
-import { TASK_STATUS_LABELS } from '../../../../core/types/constants';
 
 /**
  * Aggregated task counts per status column plus a cross-cutting overdue count.
@@ -30,7 +29,11 @@ export class TaskBoardComponent {
   readonly editTask = output<Task>();
   readonly deleteTask = output<Task>();
 
-  protected readonly statusLabels = TASK_STATUS_LABELS;
+  protected readonly localStatusLabels: Record<string, string> = {
+    todo: $localize`:task status|todo@@status.todo:To Do`,
+    in_progress: $localize`:task status|in progress@@status.in-progress:In Progress`,
+    done: $localize`:task status|done@@status.done:Done`,
+  };
 
   private readonly priorityOrder: Record<string, number> = { high: 0, medium: 1, low: 2 };
 

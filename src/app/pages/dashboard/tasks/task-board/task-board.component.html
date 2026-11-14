@@ -1,14 +1,14 @@
 <div class="task-board">
   <!-- TO DO column -->
-  <div class="column">
+  <div class="column" role="region" [attr.aria-label]="localStatusLabels['todo']">
     <div class="column-header">
-      <span class="column-title">{{ statusLabels['todo'] }}</span>
-      <span class="column-count">{{ counts().todo }}</span>
+      <span class="column-title">{{ localStatusLabels['todo'] }}</span>
+      <span class="column-count" aria-live="polite">{{ counts().todo }}</span>
     </div>
     <div class="column-body">
       @if (loading()) {
         @for (_ of [1, 2]; track $index) {
-          <div class="task-skeleton">
+          <div class="task-skeleton" aria-hidden="true">
             <div class="task-skeleton__line task-skeleton__line--short"></div>
             <div class="task-skeleton__line"></div>
             <div class="task-skeleton__line task-skeleton__line--medium"></div>
@@ -23,22 +23,24 @@
           />
         }
         @if (todoTasks().length === 0) {
-          <p class="column-empty">No tasks here.</p>
+          <p class="column-empty" i18n="Task board|Empty column@@task-board.empty">
+            No tasks here.
+          </p>
         }
       }
     </div>
   </div>
 
   <!-- IN PROGRESS column -->
-  <div class="column">
+  <div class="column" role="region" [attr.aria-label]="localStatusLabels['in_progress']">
     <div class="column-header">
-      <span class="column-title">{{ statusLabels['in_progress'] }}</span>
-      <span class="column-count">{{ counts().in_progress }}</span>
+      <span class="column-title">{{ localStatusLabels['in_progress'] }}</span>
+      <span class="column-count" aria-live="polite">{{ counts().in_progress }}</span>
     </div>
     <div class="column-body">
       @if (loading()) {
         @for (_ of [1, 2, 3]; track $index) {
-          <div class="task-skeleton">
+          <div class="task-skeleton" aria-hidden="true">
             <div class="task-skeleton__line task-skeleton__line--short"></div>
             <div class="task-skeleton__line"></div>
             <div class="task-skeleton__line task-skeleton__line--medium"></div>
@@ -53,22 +55,24 @@
           />
         }
         @if (inProgressTasks().length === 0) {
-          <p class="column-empty">No tasks here.</p>
+          <p class="column-empty" i18n="Task board|Empty column@@task-board.empty">
+            No tasks here.
+          </p>
         }
       }
     </div>
   </div>
 
   <!-- DONE column -->
-  <div class="column">
+  <div class="column" role="region" [attr.aria-label]="localStatusLabels['done']">
     <div class="column-header">
-      <span class="column-title">{{ statusLabels['done'] }}</span>
-      <span class="column-count">{{ counts().done }}</span>
+      <span class="column-title">{{ localStatusLabels['done'] }}</span>
+      <span class="column-count" aria-live="polite">{{ counts().done }}</span>
     </div>
     <div class="column-body">
       @if (loading()) {
         @for (_ of [1]; track $index) {
-          <div class="task-skeleton">
+          <div class="task-skeleton" aria-hidden="true">
             <div class="task-skeleton__line task-skeleton__line--short"></div>
             <div class="task-skeleton__line"></div>
             <div class="task-skeleton__line task-skeleton__line--medium"></div>
@@ -83,7 +87,9 @@
           />
         }
         @if (doneTasks().length === 0) {
-          <p class="column-empty">No tasks here.</p>
+          <p class="column-empty" i18n="Task board|Empty column@@task-board.empty">
+            No tasks here.
+          </p>
         }
       }
     </div>

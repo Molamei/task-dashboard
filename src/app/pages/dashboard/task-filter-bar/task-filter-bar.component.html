@@ -1,9 +1,16 @@
 <div class="filter-bar">
-  <div class="filter-bar__tabs">
-    @for (tab of tabs; track tab.value) {
+  <div
+    class="filter-bar__tabs"
+    role="tablist"
+    aria-label="Filter tasks by status"
+    i18n-aria-label="Filter bar|Status tablist aria-label@@filter.tablist.aria-label"
+  >
+    @for (tab of localTabs; track tab.value) {
       <button
         class="filter-bar__tab"
+        role="tab"
         [class.filter-bar__tab--active]="activeStatus() === tab.value"
+        [attr.aria-selected]="activeStatus() === tab.value"
         (click)="selectStatus(tab.value)"
       >
         {{ tab.label }}
@@ -15,16 +22,27 @@
     <div class="filter-bar__priority-wrapper">
       <button
         class="filter-bar__priority-btn"
+        [attr.aria-expanded]="priorityDropdownOpen"
+        aria-haspopup="listbox"
+        aria-label="Filter by priority"
+        i18n-aria-label="Filter bar|Priority filter button@@filter.priority.aria-label"
         (click)="priorityDropdownOpen = !priorityDropdownOpen"
       >
         {{ activePriority() | priorityLabel }} ▾
       </button>
       @if (priorityDropdownOpen) {
-        <ul class="filter-bar__dropdown">
-          @for (p of priorities; track p.value) {
-            <li>
+        <ul
+          class="filter-bar__dropdown"
+          role="listbox"
+          aria-label="Priority options"
+          i18n-aria-label="Filter bar|Priority listbox@@filter.priority.listbox.aria-label"
+        >
+          @for (p of localPriorities; track p.value) {
+            <li role="none">
               <button
                 class="filter-bar__dropdown-item"
+                role="option"
+                [attr.aria-selected]="activePriority() === p.value"
                 [class.filter-bar__dropdown-item--active]="activePriority() === p.value"
                 (click)="selectPriority(p.value)"
               >
@@ -40,25 +58,39 @@
       <button
         class="filter-bar__priority-btn"
         [class.filter-bar__priority-btn--active]="activeAssigneeId() !== null"
+        [attr.aria-expanded]="assigneeDropdownOpen"
+        aria-haspopup="listbox"
+        aria-label="Filter by assignee"
+        i18n-aria-label="Filter bar|Assignee filter button@@filter.assignee.aria-label"
         (click)="assigneeDropdownOpen = !assigneeDropdownOpen"
       >
         {{ activeAssigneeName }} ▾
       </button>
       @if (assigneeDropdownOpen) {
-        <ul class="filter-bar__dropdown">
-          <li>
+        <ul
+          class="filter-bar__dropdown"
+          role="listbox"
+          aria-label="Assignee options"
+          i18n-aria-label="Filter bar|Assignee listbox@@filter.assignee.listbox.aria-label"
+        >
+          <li role="none">
             <button
               class="filter-bar__dropdown-item"
+              role="option"
+              [attr.aria-selected]="activeAssigneeId() === null"
               [class.filter-bar__dropdown-item--active]="activeAssigneeId() === null"
               (click)="selectAssignee(null)"
+              i18n="Filter bar|All assignees option@@filter.all"
             >
               All
             </button>
           </li>
           @for (a of assignees(); track a.id) {
-            <li>
+            <li role="none">
               <button
                 class="filter-bar__dropdown-item"
+                role="option"
+                [attr.aria-selected]="activeAssigneeId() === a.id"
                 [class.filter-bar__dropdown-item--active]="activeAssigneeId() === a.id"
                 (click)="selectAssignee(a.id)"
               >
@@ -70,6 +102,13 @@
       }
     </div>
 
-    <button class="filter-bar__new-task-btn" (click)="newTask.emit()">+ New Task</button>
+    <button
+      class="filter-bar__new-task-btn"
+      type="button"
+      (click)="newTask.emit()"
+      i18n="Filter bar|New task button@@filter.new-task"
+    >
+      + New Task
+    </button>
   </div>
 </div>

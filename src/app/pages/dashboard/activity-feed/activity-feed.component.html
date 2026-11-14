@@ -1,13 +1,22 @@
 <div class="activity-feed">
-  <h3 class="activity-feed__title">Recent Activity</h3>
+  <h3 class="activity-feed__title" i18n="Activity feed|Section title@@activity.title">
+    Recent Activity
+  </h3>
 
   @if (enrichedEvents().length === 0) {
     <div class="activity-feed__empty" role="status">
       <span class="activity-feed__empty-icon" aria-hidden="true">📋</span>
-      <p>No activity yet. Start by creating a task.</p>
+      <p i18n="Activity feed|Empty state message@@activity.empty">
+        No activity yet. Start by creating a task.
+      </p>
     </div>
   } @else {
-    <ul class="activity-feed__list" role="list" aria-label="Recent task activity">
+    <ul
+      class="activity-feed__list"
+      role="list"
+      aria-label="Recent task activity"
+      i18n-aria-label="Activity feed|List aria-label@@activity.list.aria-label"
+    >
       @for (event of enrichedEvents(); track event.id) {
         <li class="activity-item">
           <span
@@ -21,9 +30,14 @@
           </span>
           <div class="activity-item__content">
             <p class="activity-item__text">
-              Task
+              <ng-container i18n="Activity feed|Activity item text@@activity.item.task-prefix"
+                >Task</ng-container
+              >
               <strong>"{{ event.taskTitle }}"</strong>
-              was {{ event.config.label }}
+              <ng-container i18n="Activity feed|Activity item was@@activity.item.was"
+                >was</ng-container
+              >
+              {{ event.config.label }}
               @if (event.meta?.['status']) {
                 <span class="activity-item__badge">→ {{ event.meta?.['status'] | titlecase }}</span>
               }

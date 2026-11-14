@@ -1,7 +1,10 @@
+<a href="#main-content" class="skip-link" i18n="Layout|Skip navigation link@@skip.link"
+  >Skip to main content</a
+>
 <app-navbar (searchChange)="onSearch($event)" />
 <div class="layout__body">
   <app-sidebar (newTask)="onNewTask()" />
-  <main class="layout__main">
+  <main class="layout__main" id="main-content" tabindex="-1">
     <router-outlet />
   </main>
 </div>

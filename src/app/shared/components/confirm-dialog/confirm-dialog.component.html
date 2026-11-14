@@ -1,8 +1,14 @@
-<div class="overlay" role="dialog" aria-modal="true" [attr.aria-label]="title()">
+<div
+  class="overlay"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-labelledby]="'confirm-dialog-title'"
+  [attr.aria-describedby]="'confirm-dialog-message'"
+>
   <div class="dialog">
     <div class="dialog__icon" aria-hidden="true">⚠️</div>
-    <h3 class="dialog__title">{{ title() }}</h3>
-    <p class="dialog__message">{{ message() }}</p>
+    <h3 class="dialog__title" id="confirm-dialog-title">{{ title() }}</h3>
+    <p class="dialog__message" id="confirm-dialog-message">{{ message() }}</p>
     <div class="dialog__actions">
       <button class="dialog__btn dialog__btn--cancel" type="button" (click)="cancelled.emit()">
         {{ cancelLabel() }}

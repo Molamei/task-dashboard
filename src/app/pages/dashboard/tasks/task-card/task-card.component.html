@@ -6,6 +6,8 @@
   "
   [style.--hover-shadow]="hoverShadowColor()"
   tabindex="0"
+  role="article"
+  [attr.aria-label]="task().title"
   (click)="closeMenu()"
   (keydown.escape)="closeMenu()"
 >
@@ -33,7 +35,8 @@
         <ul class="task-menu" role="menu">
           <li role="none">
             <button class="task-menu__item" role="menuitem" type="button" (click)="onEdit($event)">
-              <span aria-hidden="true">✎</span> Edit
+              <span aria-hidden="true">✎</span>
+              <ng-container i18n="Task card|Edit menu item@@task-card.menu.edit">Edit</ng-container>
             </button>
           </li>
           <li role="none">
@@ -43,7 +46,10 @@
               type="button"
               (click)="onDelete($event)"
             >
-              <span aria-hidden="true">✕</span> Delete
+              <span aria-hidden="true">✕</span>
+              <ng-container i18n="Task card|Delete menu item@@task-card.menu.delete"
+                >Delete</ng-container
+              >
             </button>
           </li>
         </ul>

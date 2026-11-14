@@ -1,37 +1,53 @@
 <aside class="sidebar">
-  <nav class="sidebar__nav" aria-label="Main navigation">
-    <ul class="sidebar__list">
+  <nav
+    class="sidebar__nav"
+    aria-label="Main navigation"
+    i18n-aria-label="Sidebar|Main navigation@@sidebar.nav.aria-label"
+  >
+    <ul class="sidebar__list" role="list">
       <li class="sidebar__item sidebar__item--active" aria-current="page">
         <span class="sidebar__icon sidebar__icon--sm" aria-hidden="true">📊</span>
-        <span class="sidebar__label">Dashboard</span>
+        <span class="sidebar__label" i18n="Sidebar|Dashboard nav item@@sidebar.nav.dashboard"
+          >Dashboard</span
+        >
       </li>
 
-      <li class="sidebar__item" tabindex="0">
+      <li class="sidebar__item" tabindex="0" role="button">
         <span class="sidebar__icon" aria-hidden="true">✅</span>
-        <span class="sidebar__label">Tasks</span>
+        <span class="sidebar__label" i18n="Sidebar|Tasks nav item@@sidebar.nav.tasks">Tasks</span>
       </li>
 
-      <li class="sidebar__item" tabindex="0">
+      <li class="sidebar__item" tabindex="0" role="button">
         <span class="sidebar__icon" aria-hidden="true">📅</span>
-        <span class="sidebar__label">Calendar</span>
+        <span class="sidebar__label" i18n="Sidebar|Calendar nav item@@sidebar.nav.calendar"
+          >Calendar</span
+        >
       </li>
 
-      <li class="sidebar__item" tabindex="0">
+      <li class="sidebar__item" tabindex="0" role="button">
         <span class="sidebar__icon" aria-hidden="true">📈</span>
-        <span class="sidebar__label">Analytics</span>
+        <span class="sidebar__label" i18n="Sidebar|Analytics nav item@@sidebar.nav.analytics"
+          >Analytics</span
+        >
       </li>
 
-      <li class="sidebar__item" tabindex="0">
+      <li class="sidebar__item" tabindex="0" role="button">
         <span class="sidebar__icon" aria-hidden="true">👥</span>
-        <span class="sidebar__label">Team</span>
+        <span class="sidebar__label" i18n="Sidebar|Team nav item@@sidebar.nav.team">Team</span>
       </li>
 
-      <li class="sidebar__item" tabindex="0">
+      <li class="sidebar__item" tabindex="0" role="button">
         <span class="sidebar__icon" aria-hidden="true">⚙️</span>
-        <span class="sidebar__label">Settings</span>
+        <span class="sidebar__label" i18n="Sidebar|Settings nav item@@sidebar.nav.settings"
+          >Settings</span
+        >
       </li>
     </ul>
   </nav>
 
-  <app-button label="+ New Task" (clicked)="newTask.emit()" />
+  <app-button
+    label="+ New Task"
+    i18n-label="Sidebar|New task button@@sidebar.new-task"
+    (clicked)="newTask.emit()"
+  />
 </aside>

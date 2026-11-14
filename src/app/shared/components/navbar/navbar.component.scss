@@ -102,9 +102,38 @@
     display: flex;
     align-items: center;
     gap: 16px;
-    width: 96px;
     height: 40px;
     flex: 0 0 auto;
+  }
+
+  &__lang {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  &__lang-link {
+    color: var(--color-azure-46, #1976d2);
+    text-decoration: none;
+    padding: 2px 4px;
+    border-radius: 3px;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: rgba(25, 118, 210, 0.08);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-azure-46, #1976d2);
+      outline-offset: 2px;
+    }
+  }
+
+  &__lang-sep {
+    color: #bdbdbd;
   }
 
   &__bell {

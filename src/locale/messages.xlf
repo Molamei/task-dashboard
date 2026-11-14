@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+
+      <!-- ── Navbar ───────────────────────────────────────────────────────── -->
+      <trans-unit id="app.name" datatype="html">
+        <source>Task Manager</source>
+        <note priority="1" from="description">Navbar|Application name</note>
+      </trans-unit>
+      <trans-unit id="navbar.search.placeholder" datatype="html">
+        <source>Search tasks…</source>
+        <note priority="1" from="description">Navbar|Search input placeholder</note>
+      </trans-unit>
+      <trans-unit id="navbar.search.aria-label" datatype="html">
+        <source>Search tasks</source>
+        <note priority="1" from="description">Navbar|Search input aria-label</note>
+      </trans-unit>
+      <trans-unit id="navbar.notifications" datatype="html">
+        <source>Notifications</source>
+        <note priority="1" from="description">Navbar|Notifications button</note>
+      </trans-unit>
+      <trans-unit id="navbar.lang.aria-label" datatype="html">
+        <source>Language</source>
+        <note priority="1" from="description">Navbar|Language switcher</note>
+      </trans-unit>
+      <trans-unit id="navbar.lang.en" datatype="html">
+        <source>Switch to English</source>
+        <note priority="1" from="description">Navbar|English language link</note>
+      </trans-unit>
+      <trans-unit id="navbar.lang.ar" datatype="html">
+        <source>Switch to Arabic</source>
+        <note priority="1" from="description">Navbar|Arabic language link</note>
+      </trans-unit>
+
+      <!-- ── Sidebar ──────────────────────────────────────────────────────── -->
+      <trans-unit id="sidebar.nav.aria-label" datatype="html">
+        <source>Main navigation</source>
+        <note priority="1" from="description">Sidebar|Main navigation</note>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.dashboard" datatype="html">
+        <source>Dashboard</source>
+        <note priority="1" from="description">Sidebar|Dashboard nav item</note>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.tasks" datatype="html">
+        <source>Tasks</source>
+        <note priority="1" from="description">Sidebar|Tasks nav item</note>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.calendar" datatype="html">
+        <source>Calendar</source>
+        <note priority="1" from="description">Sidebar|Calendar nav item</note>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.analytics" datatype="html">
+        <source>Analytics</source>
+        <note priority="1" from="description">Sidebar|Analytics nav item</note>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.team" datatype="html">
+        <source>Team</source>
+        <note priority="1" from="description">Sidebar|Team nav item</note>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.settings" datatype="html">
+        <source>Settings</source>
+        <note priority="1" from="description">Sidebar|Settings nav item</note>
+      </trans-unit>
+      <trans-unit id="sidebar.new-task" datatype="html">
+        <source>+ New Task</source>
+        <note priority="1" from="description">Sidebar|New task button</note>
+      </trans-unit>
+
+      <!-- ── Layout ───────────────────────────────────────────────────────── -->
+      <trans-unit id="skip.link" datatype="html">
+        <source>Skip to main content</source>
+        <note priority="1" from="description">Layout|Skip navigation link</note>
+      </trans-unit>
+
+      <!-- ── Activity feed ────────────────────────────────────────────────── -->
+      <trans-unit id="activity.title" datatype="html">
+        <source>Recent Activity</source>
+        <note priority="1" from="description">Activity feed|Section title</note>
+      </trans-unit>
+      <trans-unit id="activity.empty" datatype="html">
+        <source>No activity yet. Start by creating a task.</source>
+        <note priority="1" from="description">Activity feed|Empty state message</note>
+      </trans-unit>
+      <trans-unit id="activity.list.aria-label" datatype="html">
+        <source>Recent task activity</source>
+        <note priority="1" from="description">Activity feed|List aria-label</note>
+      </trans-unit>
+      <trans-unit id="activity.item.task-prefix" datatype="html">
+        <source>Task</source>
+        <note priority="1" from="description">Activity feed|Activity item text</note>
+      </trans-unit>
+      <trans-unit id="activity.item.was" datatype="html">
+        <source>was</source>
+        <note priority="1" from="description">Activity feed|Activity item was</note>
+      </trans-unit>
+
+      <!-- ── Task board ────────────────────────────────────────────────────── -->
+      <trans-unit id="task-board.empty" datatype="html">
+        <source>No tasks here.</source>
+        <note priority="1" from="description">Task board|Empty column</note>
+      </trans-unit>
+
+      <!-- ── Status labels (TypeScript $localize) ─────────────────────────── -->
+      <trans-unit id="status.todo" datatype="html">
+        <source>To Do</source>
+        <note priority="1" from="description">task status|todo</note>
+      </trans-unit>
+      <trans-unit id="status.in-progress" datatype="html">
+        <source>In Progress</source>
+        <note priority="1" from="description">task status|in progress</note>
+      </trans-unit>
+      <trans-unit id="status.done" datatype="html">
+        <source>Done</source>
+        <note priority="1" from="description">task status|done</note>
+      </trans-unit>
+
+      <!-- ── Priority labels (TypeScript $localize) ───────────────────────── -->
+      <trans-unit id="priority.high" datatype="html">
+        <source>High</source>
+        <note priority="1" from="description">task priority|high</note>
+      </trans-unit>
+      <trans-unit id="priority.medium" datatype="html">
+        <source>Medium</source>
+        <note priority="1" from="description">task priority|medium</note>
+      </trans-unit>
+      <trans-unit id="priority.low" datatype="html">
+        <source>Low</source>
+        <note priority="1" from="description">task priority|low</note>
+      </trans-unit>
+      <trans-unit id="priority.default" datatype="html">
+        <source>Priority</source>
+        <note priority="1" from="description">filter|default priority filter label</note>
+      </trans-unit>
+
+      <!-- ── Filter bar ────────────────────────────────────────────────────── -->
+      <trans-unit id="filter.tablist.aria-label" datatype="html">
+        <source>Filter tasks by status</source>
+        <note priority="1" from="description">Filter bar|Status tablist aria-label</note>
+      </trans-unit>
+      <trans-unit id="filter.status.all" datatype="html">
+        <source>All</source>
+        <note priority="1" from="description">filter tab|all</note>
+      </trans-unit>
+      <trans-unit id="filter.priority.all" datatype="html">
+        <source>All</source>
+        <note priority="1" from="description">filter option|all</note>
+      </trans-unit>
+      <trans-unit id="filter.priority.aria-label" datatype="html">
+        <source>Filter by priority</source>
+        <note priority="1" from="description">Filter bar|Priority filter button</note>
+      </trans-unit>
+      <trans-unit id="filter.priority.listbox.aria-label" datatype="html">
+        <source>Priority options</source>
+        <note priority="1" from="description">Filter bar|Priority listbox</note>
+      </trans-unit>
+      <trans-unit id="filter.assignee.aria-label" datatype="html">
+        <source>Filter by assignee</source>
+        <note priority="1" from="description">Filter bar|Assignee filter button</note>
+      </trans-unit>
+      <trans-unit id="filter.assignee.listbox.aria-label" datatype="html">
+        <source>Assignee options</source>
+        <note priority="1" from="description">Filter bar|Assignee listbox</note>
+      </trans-unit>
+      <trans-unit id="filter.all" datatype="html">
+        <source>All</source>
+        <note priority="1" from="description">Filter bar|All assignees option</note>
+      </trans-unit>
+      <trans-unit id="filter.assignee.default" datatype="html">
+        <source>Assignee</source>
+        <note priority="1" from="description">filter bar|default assignee filter label</note>
+      </trans-unit>
+      <trans-unit id="filter.new-task" datatype="html">
+        <source>+ New Task</source>
+        <note priority="1" from="description">Filter bar|New task button</note>
+      </trans-unit>
+
+      <!-- ── Task form modal ───────────────────────────────────────────────── -->
+      <trans-unit id="modal.close.aria-label" datatype="html">
+        <source>Close</source>
+        <note priority="1" from="description">Modal|Close button</note>
+      </trans-unit>
+      <trans-unit id="task-form.label.title" datatype="html">
+        <source>Title</source>
+        <note priority="1" from="description">Task form|Title label</note>
+      </trans-unit>
+      <trans-unit id="task-form.placeholder.title" datatype="html">
+        <source>Enter task title</source>
+        <note priority="1" from="description">Task form|Title placeholder</note>
+      </trans-unit>
+      <trans-unit id="task-form.error.title-required" datatype="html">
+        <source>Title is required.</source>
+        <note priority="1" from="description">Task form|Title required error</note>
+      </trans-unit>
+      <trans-unit id="task-form.error.title-minlength" datatype="html">
+        <source>Title must be at least 3 characters.</source>
+        <note priority="1" from="description">Task form|Title minlength error</note>
+      </trans-unit>
+      <trans-unit id="task-form.error.title-whitespace" datatype="html">
+        <source>Title must not start or end with spaces.</source>
+        <note priority="1" from="description">Task form|Title whitespace error</note>
+      </trans-unit>
+      <trans-unit id="task-form.label.description" datatype="html">
+        <source>Description</source>
+        <note priority="1" from="description">Task form|Description label</note>
+      </trans-unit>
+      <trans-unit id="task-form.placeholder.description" datatype="html">
+        <source>Describe the task…</source>
+        <note priority="1" from="description">Task form|Description placeholder</note>
+      </trans-unit>
+      <trans-unit id="task-form.error.desc-required" datatype="html">
+        <source>Description is required.</source>
+        <note priority="1" from="description">Task form|Description required error</note>
+      </trans-unit>
+      <trans-unit id="task-form.error.desc-minlength" datatype="html">
+        <source>Description must be at least 10 characters.</source>
+        <note priority="1" from="description">Task form|Description minlength error</note>
+      </trans-unit>
+      <trans-unit id="task-form.label.status" datatype="html">
+        <source>Status</source>
+        <note priority="1" from="description">Task form|Status label</note>
+      </trans-unit>
+      <trans-unit id="task-form.label.priority" datatype="html">
+        <source>Priority</source>
+        <note priority="1" from="description">Task form|Priority label</note>
+      </trans-unit>
+      <trans-unit id="task-form.label.due-date" datatype="html">
+        <source>Due Date</source>
+        <note priority="1" from="description">Task form|Due date label</note>
+      </trans-unit>
+      <trans-unit id="task-form.error.due-required" datatype="html">
+        <source>Due date is required.</source>
+        <note priority="1" from="description">Task form|Due required error</note>
+      </trans-unit>
+      <trans-unit id="task-form.error.due-past" datatype="html">
+        <source>Due date cannot be in the past.</source>
+        <note priority="1" from="description">Task form|Due past error</note>
+      </trans-unit>
+      <trans-unit id="task-form.label.assignee" datatype="html">
+        <source>Assignee</source>
+        <note priority="1" from="description">Task form|Assignee label</note>
+      </trans-unit>
+      <trans-unit id="task-form.loading-users" datatype="html">
+        <source>Loading users…</source>
+        <note priority="1" from="description">Task form|Loading users option</note>
+      </trans-unit>
+      <trans-unit id="task-form.select-assignee" datatype="html">
+        <source>Select an assignee</source>
+        <note priority="1" from="description">Task form|Select assignee option</note>
+      </trans-unit>
+      <trans-unit id="task-form.error.assignee-required" datatype="html">
+        <source>Assignee is required.</source>
+        <note priority="1" from="description">Task form|Assignee required error</note>
+      </trans-unit>
+      <trans-unit id="task-form.label.tags" datatype="html">
+        <source>Tags</source>
+        <note priority="1" from="description">Task form|Tags label</note>
+      </trans-unit>
+      <trans-unit id="task-form.hint.tags-max" datatype="html">
+        <source> (max 5)</source>
+        <note priority="1" from="description">Task form|Tags max hint</note>
+      </trans-unit>
+      <trans-unit id="task-form.placeholder.tag" datatype="html">
+        <source>Add a tag and press Enter</source>
+        <note priority="1" from="description">Task form|Tag input placeholder</note>
+      </trans-unit>
+      <trans-unit id="task-form.tag-input.aria-label" datatype="html">
+        <source>New tag</source>
+        <note priority="1" from="description">Task form|New tag input</note>
+      </trans-unit>
+      <trans-unit id="task-form.btn.add" datatype="html">
+        <source>Add</source>
+        <note priority="1" from="description">Task form|Add tag button</note>
+      </trans-unit>
+      <trans-unit id="task-form.error.max-tags" datatype="html">
+        <source>Maximum 5 tags allowed.</source>
+        <note priority="1" from="description">Task form|Max tags error</note>
+      </trans-unit>
+      <trans-unit id="task-form.btn.cancel" datatype="html">
+        <source>Cancel</source>
+        <note priority="1" from="description">Task form|Cancel button</note>
+      </trans-unit>
+      <trans-unit id="task-form.btn.save" datatype="html">
+        <source>Save Changes</source>
+        <note priority="1" from="description">Task form|Save changes button</note>
+      </trans-unit>
+      <trans-unit id="task-form.btn.create" datatype="html">
+        <source>Create Task</source>
+        <note priority="1" from="description">Task form|Create task button</note>
+      </trans-unit>
+
+      <!-- ── Dashboard ─────────────────────────────────────────────────────── -->
+      <trans-unit id="dashboard.clear-activity" datatype="html">
+        <source>Clear activity</source>
+        <note priority="1" from="description">Dashboard|Clear activity button</note>
+      </trans-unit>
+      <trans-unit id="dashboard.delete-dialog.title" datatype="html">
+        <source>Delete Task</source>
+        <note priority="1" from="description">Dashboard|Delete dialog title</note>
+      </trans-unit>
+      <trans-unit id="dashboard.delete-dialog.confirm" datatype="html">
+        <source>Delete</source>
+        <note priority="1" from="description">Dashboard|Delete dialog confirm button</note>
+      </trans-unit>
+
+      <!-- ── Analytics ─────────────────────────────────────────────────────── -->
+      <trans-unit id="analytics.priority-title" datatype="html">
+        <source>Tasks by Priority</source>
+        <note priority="1" from="description">Analytics|Priority chart title</note>
+      </trans-unit>
+      <trans-unit id="analytics.status-title" datatype="html">
+        <source>Tasks by Status</source>
+        <note priority="1" from="description">Analytics|Status chart title</note>
+      </trans-unit>
+      <trans-unit id="analytics.priority-chart.aria-label" datatype="html">
+        <source>Donut chart: tasks by priority</source>
+        <note priority="1" from="description">Analytics|Priority chart aria-label</note>
+      </trans-unit>
+      <trans-unit id="analytics.status-chart.aria-label" datatype="html">
+        <source>Bar chart: tasks by status</source>
+        <note priority="1" from="description">Analytics|Status chart aria-label</note>
+      </trans-unit>
+
+      <!-- ── Task card ──────────────────────────────────────────────────────── -->
+      <trans-unit id="task-card.menu.edit" datatype="html">
+        <source>Edit</source>
+        <note priority="1" from="description">Task card|Edit menu item</note>
+      </trans-unit>
+      <trans-unit id="task-card.menu.delete" datatype="html">
+        <source>Delete</source>
+        <note priority="1" from="description">Task card|Delete menu item</note>
+      </trans-unit>
+
+    </body>
+  </file>
+</xliff>

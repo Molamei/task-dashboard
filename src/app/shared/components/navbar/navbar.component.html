@@ -1,7 +1,7 @@
 <nav class="navbar" role="banner">
   <div class="navbar__logo">
     <div class="navbar__logo-icon" aria-hidden="true">📋</div>
-    <span class="navbar__logo-text">Task Manager</span>
+    <span class="navbar__logo-text" i18n="Navbar|Application name@@app.name">Task Manager</span>
   </div>
 
   <div class="navbar__search" role="search">
@@ -9,16 +9,51 @@
     <input
       class="navbar__search-input"
       type="search"
-      placeholder="Search tasks..."
+      placeholder="Search tasks…"
+      i18n-placeholder="Navbar|Search input placeholder@@navbar.search.placeholder"
       [value]="searchQuery()"
       (input)="onSearch($event)"
       aria-label="Search tasks"
+      i18n-aria-label="Navbar|Search input aria-label@@navbar.search.aria-label"
     />
   </div>
 
   <div class="navbar__actions">
-    <button class="navbar__bell" aria-label="Notifications">🔔</button>
+    <button
+      class="navbar__bell"
+      aria-label="Notifications"
+      i18n-aria-label="Navbar|Notifications button@@navbar.notifications"
+    >
+      🔔
+    </button>
 
     <div class="navbar__avatar" role="img" aria-label="User profile: John Doe">JD</div>
+
+    <div
+      class="navbar__lang"
+      aria-label="Language"
+      i18n-aria-label="Navbar|Language switcher@@navbar.lang.aria-label"
+    >
+      <a
+        href="/en-US/"
+        class="navbar__lang-link"
+        lang="en"
+        hreflang="en"
+        aria-label="Switch to English"
+        i18n-aria-label="Navbar|English language link@@navbar.lang.en"
+        >EN</a
+      >
+      <span class="navbar__lang-sep" aria-hidden="true">|</span>
+      <a
+        href="/ar/"
+        class="navbar__lang-link"
+        lang="ar"
+        hreflang="ar"
+        dir="rtl"
+        aria-label="Switch to Arabic"
+        i18n-aria-label="Navbar|Arabic language link@@navbar.lang.ar"
+        >AR</a
+      >
+    </div>
   </div>
 </nav>

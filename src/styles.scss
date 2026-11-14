@@ -25,6 +25,25 @@ html {
   padding: 0;
 }
 
+/* ── Skip navigation link (WCAG 2.4.1 Bypass Blocks) ───────────────────────── */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 10000;
+  padding: 0.5rem 1.25rem;
+  background: #1976d2;
+  color: #ffffff;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 0 0 6px 0;
+  outline-offset: 2px;
+
+  &:focus {
+    left: 0;
+  }
+}
+
 body {
   font-family:
     'Inter',

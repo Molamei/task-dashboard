@@ -1,8 +1,14 @@
-<div class="modal-overlay" role="dialog" aria-modal="true" [attr.aria-label]="title()">
+<div class="modal-overlay" role="dialog" aria-modal="true" [attr.aria-labelledby]="'modal-title'">
   <div class="modal">
     <div class="modal__header">
-      <h2 class="modal__title">{{ title() }}</h2>
-      <button class="modal__close" type="button" aria-label="Close" (click)="closed.emit()">
+      <h2 class="modal__title" id="modal-title">{{ title() }}</h2>
+      <button
+        class="modal__close"
+        type="button"
+        aria-label="Close"
+        i18n-aria-label="Modal|Close button@@modal.close.aria-label"
+        (click)="closed.emit()"
+      >
         ✕
       </button>
     </div>
@@ -10,9 +16,10 @@
     <form class="modal__body" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       <!-- Title -->
       <div class="field">
-        <label class="field__label" for="task-title"
-          >Title <span class="field__required">*</span></label
-        >
+        <label class="field__label" for="task-title">
+          <ng-container i18n="Task form|Title label@@task-form.label.title">Title</ng-container>
+          <span class="field__required" aria-hidden="true"> *</span>
+        </label>
         <input
           id="task-title"
           class="field__input"
@@ -23,47 +30,97 @@
           "
           type="text"
           placeholder="Enter task title"
+          i18n-placeholder="Task form|Title placeholder@@task-form.placeholder.title"
           formControlName="title"
           aria-required="true"
+          [attr.aria-describedby]="
+            hasError('title', 'required') ||
+            hasError('title', 'minlength') ||
+            hasError('title', 'whitespace')
+              ? 'title-error'
+              : null
+          "
         />
         @if (hasError('title', 'required')) {
-          <span class="field__error" role="alert">Title is required.</span>
+          <span
+            id="title-error"
+            class="field__error"
+            role="alert"
+            i18n="Task form|Title required error@@task-form.error.title-required"
+            >Title is required.</span
+          >
         } @else if (hasError('title', 'minlength')) {
-          <span class="field__error" role="alert">Title must be at least 3 characters.</span>
+          <span
+            id="title-error"
+            class="field__error"
+            role="alert"
+            i18n="Task form|Title minlength error@@task-form.error.title-minlength"
+            >Title must be at least 3 characters.</span
+          >
         } @else if (hasError('title', 'whitespace')) {
-          <span class="field__error" role="alert">Title must not start or end with spaces.</span>
+          <span
+            id="title-error"
+            class="field__error"
+            role="alert"
+            i18n="Task form|Title whitespace error@@task-form.error.title-whitespace"
+            >Title must not start or end with spaces.</span
+          >
         }
       </div>
 
       <!-- Description -->
       <div class="field">
-        <label class="field__label" for="task-desc"
-          >Description <span class="field__required">*</span></label
-        >
+        <label class="field__label" for="task-desc">
+          <ng-container i18n="Task form|Description label@@task-form.label.description"
+            >Description</ng-container
+          >
+          <span class="field__required" aria-hidden="true"> *</span>
+        </label>
         <textarea
           id="task-desc"
           class="field__input field__textarea"
           [class.field__input--error]="
             hasError('description', 'required') || hasError('description', 'minlength')
           "
-          placeholder="Describe the task..."
+          placeholder="Describe the task…"
+          i18n-placeholder="Task form|Description placeholder@@task-form.placeholder.description"
           formControlName="description"
           rows="3"
           aria-required="true"
+          [attr.aria-describedby]="
+            hasError('description', 'required') || hasError('description', 'minlength')
+              ? 'desc-error'
+              : null
+          "
         ></textarea>
         @if (hasError('description', 'required')) {
-          <span class="field__error" role="alert">Description is required.</span>
+          <span
+            id="desc-error"
+            class="field__error"
+            role="alert"
+            i18n="Task form|Description required error@@task-form.error.desc-required"
+            >Description is required.</span
+          >
         } @else if (hasError('description', 'minlength')) {
-          <span class="field__error" role="alert">Description must be at least 10 characters.</span>
+          <span
+            id="desc-error"
+            class="field__error"
+            role="alert"
+            i18n="Task form|Description minlength error@@task-form.error.desc-minlength"
+            >Description must be at least 10 characters.</span
+          >
         }
       </div>
 
       <!-- Status + Priority row -->
       <div class="field-row">
         <div class="field">
-          <label class="field__label" for="task-status"
-            >Status <span class="field__required">*</span></label
-          >
+          <label class="field__label" for="task-status">
+            <ng-container i18n="Task form|Status label@@task-form.label.status"
+              >Status</ng-container
+            >
+            <span class="field__required" aria-hidden="true"> *</span>
+          </label>
           <select
             id="task-status"
             class="field__input field__select"
@@ -77,9 +134,12 @@
         </div>
 
         <div class="field">
-          <label class="field__label" for="task-priority"
-            >Priority <span class="field__required">*</span></label
-          >
+          <label class="field__label" for="task-priority">
+            <ng-container i18n="Task form|Priority label@@task-form.label.priority"
+              >Priority</ng-container
+            >
+            <span class="field__required" aria-hidden="true"> *</span>
+          </label>
           <select
             id="task-priority"
             class="field__input field__select"
@@ -95,9 +155,12 @@
 
       <!-- Due Date -->
       <div class="field">
-        <label class="field__label" for="task-due"
-          >Due Date <span class="field__required">*</span></label
-        >
+        <label class="field__label" for="task-due">
+          <ng-container i18n="Task form|Due date label@@task-form.label.due-date"
+            >Due Date</ng-container
+          >
+          <span class="field__required" aria-hidden="true"> *</span>
+        </label>
         <input
           id="task-due"
           class="field__input"
@@ -107,19 +170,37 @@
           type="date"
           formControlName="dueDate"
           aria-required="true"
+          [attr.aria-describedby]="
+            hasError('dueDate', 'required') || hasError('dueDate', 'pastDate') ? 'due-error' : null
+          "
         />
         @if (hasError('dueDate', 'required')) {
-          <span class="field__error" role="alert">Due date is required.</span>
+          <span
+            id="due-error"
+            class="field__error"
+            role="alert"
+            i18n="Task form|Due required error@@task-form.error.due-required"
+            >Due date is required.</span
+          >
         } @else if (hasError('dueDate', 'pastDate')) {
-          <span class="field__error" role="alert">Due date cannot be in the past.</span>
+          <span
+            id="due-error"
+            class="field__error"
+            role="alert"
+            i18n="Task form|Due past error@@task-form.error.due-past"
+            >Due date cannot be in the past.</span
+          >
         }
       </div>
 
       <!-- Assignee -->
       <div class="field">
-        <label class="field__label" for="task-assignee"
-          >Assignee <span class="field__required">*</span></label
-        >
+        <label class="field__label" for="task-assignee">
+          <ng-container i18n="Task form|Assignee label@@task-form.label.assignee"
+            >Assignee</ng-container
+          >
+          <span class="field__required" aria-hidden="true"> *</span>
+        </label>
         <select
           id="task-assignee"
           class="field__input field__select"
@@ -127,43 +208,64 @@
           [class.field__loading]="users().length === 0"
           formControlName="assigneeId"
           aria-required="true"
+          [attr.aria-describedby]="hasError('assigneeId', 'required') ? 'assignee-error' : null"
         >
           @if (users().length === 0) {
-            <option value="">Loading users…</option>
+            <option value="" i18n="Task form|Loading users option@@task-form.loading-users">
+              Loading users…
+            </option>
           } @else {
-            <option value="" disabled>Select an assignee</option>
+            <option
+              value=""
+              disabled
+              i18n="Task form|Select assignee option@@task-form.select-assignee"
+            >
+              Select an assignee
+            </option>
             @for (user of users(); track user.id) {
               <option [value]="user.id">{{ user.name }}</option>
             }
           }
         </select>
         @if (hasError('assigneeId', 'required')) {
-          <span class="field__error" role="alert">Assignee is required.</span>
+          <span
+            id="assignee-error"
+            class="field__error"
+            role="alert"
+            i18n="Task form|Assignee required error@@task-form.error.assignee-required"
+            >Assignee is required.</span
+          >
         }
       </div>
 
       <!-- Tags -->
       <div class="field">
-        <label class="field__label" for="task-tag-input"
-          >Tags <span class="field__hint">(max 5)</span></label
-        >
+        <label class="field__label" for="task-tag-input">
+          <ng-container i18n="Task form|Tags label@@task-form.label.tags">Tags</ng-container>
+          <span class="field__hint" i18n="Task form|Tags max hint@@task-form.hint.tags-max">
+            (max 5)</span
+          >
+        </label>
         <div class="tags-input">
           <input
             id="task-tag-input"
             class="field__input tags-input__field"
             type="text"
             placeholder="Add a tag and press Enter"
+            i18n-placeholder="Task form|Tag input placeholder@@task-form.placeholder.tag"
             [value]="newTagValue()"
             (input)="newTagValue.set($any($event.target).value)"
             (keydown)="onTagKeydown($event)"
             [disabled]="tagsArray.length >= 5"
             aria-label="New tag"
+            i18n-aria-label="Task form|New tag input@@task-form.tag-input.aria-label"
           />
           <button
             type="button"
             class="tags-input__add-btn"
             [disabled]="tagsArray.length >= 5"
             (click)="addTag()"
+            i18n="Task form|Add tag button@@task-form.btn.add"
           >
             Add
           </button>
@@ -186,15 +288,35 @@
           </div>
         }
         @if (tagsArray.errors?.['maxTags']) {
-          <span class="field__error" role="alert">Maximum 5 tags allowed.</span>
+          <span
+            class="field__error"
+            role="alert"
+            i18n="Task form|Max tags error@@task-form.error.max-tags"
+            >Maximum 5 tags allowed.</span
+          >
         }
       </div>
 
       <!-- Actions -->
       <div class="modal__footer">
-        <button class="btn btn--secondary" type="button" (click)="closed.emit()">Cancel</button>
+        <button
+          class="btn btn--secondary"
+          type="button"
+          (click)="closed.emit()"
+          i18n="Task form|Cancel button@@task-form.btn.cancel"
+        >
+          Cancel
+        </button>
         <button class="btn btn--primary" type="submit">
-          {{ isEdit() ? 'Save Changes' : 'Create Task' }}
+          @if (isEdit()) {
+            <ng-container i18n="Task form|Save changes button@@task-form.btn.save"
+              >Save Changes</ng-container
+            >
+          } @else {
+            <ng-container i18n="Task form|Create task button@@task-form.btn.create"
+              >Create Task</ng-container
+            >
+          }
         </button>
       </div>
     </form>

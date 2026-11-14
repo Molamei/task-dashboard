@@ -1,15 +1,32 @@
 <div class="analytics">
   <div class="analytics__chart-card">
-    <h3 class="analytics__chart-title">Tasks by Priority</h3>
+    <h3
+      class="analytics__chart-title"
+      i18n="Analytics|Priority chart title@@analytics.priority-title"
+    >
+      Tasks by Priority
+    </h3>
     <div class="analytics__chart-wrapper">
-      <canvas #priorityChart aria-label="Donut chart: tasks by priority"></canvas>
+      <canvas
+        #priorityChart
+        role="img"
+        aria-label="Donut chart: tasks by priority"
+        i18n-aria-label="Analytics|Priority chart aria-label@@analytics.priority-chart.aria-label"
+      ></canvas>
     </div>
   </div>
 
   <div class="analytics__chart-card">
-    <h3 class="analytics__chart-title">Tasks by Status</h3>
+    <h3 class="analytics__chart-title" i18n="Analytics|Status chart title@@analytics.status-title">
+      Tasks by Status
+    </h3>
     <div class="analytics__chart-wrapper">
-      <canvas #statusChart aria-label="Bar chart: tasks by status"></canvas>
+      <canvas
+        #statusChart
+        role="img"
+        aria-label="Bar chart: tasks by status"
+        i18n-aria-label="Analytics|Status chart aria-label@@analytics.status-chart.aria-label"
+      ></canvas>
     </div>
   </div>
 </div>

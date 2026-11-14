@@ -21,7 +21,18 @@ export class TaskCardComponent {
   protected readonly menuOpen = signal(false);
 
   protected readonly priorityStyle = computed(() => TASK_PRIORITY_BADGE[this.task().priority]);
-  protected readonly priorityLabel = computed(() => this.task().priority.toUpperCase());
+  protected readonly priorityLabel = computed(() => {
+    switch (this.task().priority) {
+      case 'high':
+        return $localize`:task priority|high@@priority.high:High`;
+      case 'medium':
+        return $localize`:task priority|medium@@priority.medium:Medium`;
+      case 'low':
+        return $localize`:task priority|low@@priority.low:Low`;
+      default:
+        return this.task().priority.toUpperCase();
+    }
+  });
 
   /**
    * Deterministically maps an assignee ID to a colour from `AVATAR_COLORS`.

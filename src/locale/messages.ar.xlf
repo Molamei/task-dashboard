@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" target-language="ar" datatype="plaintext" original="ng2.template">
+    <body>
+
+      <!-- ── Navbar ───────────────────────────────────────────────────────── -->
+      <trans-unit id="app.name" datatype="html">
+        <source>Task Manager</source>
+        <target state="translated">مدير المهام</target>
+      </trans-unit>
+      <trans-unit id="navbar.search.placeholder" datatype="html">
+        <source>Search tasks…</source>
+        <target state="translated">البحث عن المهام…</target>
+      </trans-unit>
+      <trans-unit id="navbar.search.aria-label" datatype="html">
+        <source>Search tasks</source>
+        <target state="translated">البحث عن المهام</target>
+      </trans-unit>
+      <trans-unit id="navbar.notifications" datatype="html">
+        <source>Notifications</source>
+        <target state="translated">الإشعارات</target>
+      </trans-unit>
+      <trans-unit id="navbar.lang.aria-label" datatype="html">
+        <source>Language</source>
+        <target state="translated">اللغة</target>
+      </trans-unit>
+      <trans-unit id="navbar.lang.en" datatype="html">
+        <source>Switch to English</source>
+        <target state="translated">التبديل إلى الإنجليزية</target>
+      </trans-unit>
+      <trans-unit id="navbar.lang.ar" datatype="html">
+        <source>Switch to Arabic</source>
+        <target state="translated">التبديل إلى العربية</target>
+      </trans-unit>
+
+      <!-- ── Sidebar ──────────────────────────────────────────────────────── -->
+      <trans-unit id="sidebar.nav.aria-label" datatype="html">
+        <source>Main navigation</source>
+        <target state="translated">التنقل الرئيسي</target>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.dashboard" datatype="html">
+        <source>Dashboard</source>
+        <target state="translated">لوحة التحكم</target>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.tasks" datatype="html">
+        <source>Tasks</source>
+        <target state="translated">المهام</target>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.calendar" datatype="html">
+        <source>Calendar</source>
+        <target state="translated">التقويم</target>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.analytics" datatype="html">
+        <source>Analytics</source>
+        <target state="translated">التحليلات</target>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.team" datatype="html">
+        <source>Team</source>
+        <target state="translated">الفريق</target>
+      </trans-unit>
+      <trans-unit id="sidebar.nav.settings" datatype="html">
+        <source>Settings</source>
+        <target state="translated">الإعدادات</target>
+      </trans-unit>
+      <trans-unit id="sidebar.new-task" datatype="html">
+        <source>+ New Task</source>
+        <target state="translated">+ مهمة جديدة</target>
+      </trans-unit>
+
+      <!-- ── Layout ───────────────────────────────────────────────────────── -->
+      <trans-unit id="skip.link" datatype="html">
+        <source>Skip to main content</source>
+        <target state="translated">تخطي إلى المحتوى الرئيسي</target>
+      </trans-unit>
+
+      <!-- ── Activity feed ────────────────────────────────────────────────── -->
+      <trans-unit id="activity.title" datatype="html">
+        <source>Recent Activity</source>
+        <target state="translated">النشاط الأخير</target>
+      </trans-unit>
+      <trans-unit id="activity.empty" datatype="html">
+        <source>No activity yet. Start by creating a task.</source>
+        <target state="translated">لا نشاط حتى الآن. ابدأ بإنشاء مهمة.</target>
+      </trans-unit>
+      <trans-unit id="activity.list.aria-label" datatype="html">
+        <source>Recent task activity</source>
+        <target state="translated">نشاط المهام الأخير</target>
+      </trans-unit>
+      <trans-unit id="activity.item.task-prefix" datatype="html">
+        <source>Task</source>
+        <target state="translated">المهمة</target>
+      </trans-unit>
+      <trans-unit id="activity.item.was" datatype="html">
+        <source>was</source>
+        <target state="translated">تم</target>
+      </trans-unit>
+
+      <!-- ── Task board ────────────────────────────────────────────────────── -->
+      <trans-unit id="task-board.empty" datatype="html">
+        <source>No tasks here.</source>
+        <target state="translated">لا توجد مهام هنا.</target>
+      </trans-unit>
+
+      <!-- ── Status labels ────────────────────────────────────────────────── -->
+      <trans-unit id="status.todo" datatype="html">
+        <source>To Do</source>
+        <target state="translated">للتنفيذ</target>
+      </trans-unit>
+      <trans-unit id="status.in-progress" datatype="html">
+        <source>In Progress</source>
+        <target state="translated">قيد التنفيذ</target>
+      </trans-unit>
+      <trans-unit id="status.done" datatype="html">
+        <source>Done</source>
+        <target state="translated">مكتمل</target>
+      </trans-unit>
+
+      <!-- ── Priority labels ──────────────────────────────────────────────── -->
+      <trans-unit id="priority.high" datatype="html">
+        <source>High</source>
+        <target state="translated">عالية</target>
+      </trans-unit>
+      <trans-unit id="priority.medium" datatype="html">
+        <source>Medium</source>
+        <target state="translated">متوسطة</target>
+      </trans-unit>
+      <trans-unit id="priority.low" datatype="html">
+        <source>Low</source>
+        <target state="translated">منخفضة</target>
+      </trans-unit>
+      <trans-unit id="priority.default" datatype="html">
+        <source>Priority</source>
+        <target state="translated">الأولوية</target>
+      </trans-unit>
+
+      <!-- ── Filter bar ────────────────────────────────────────────────────── -->
+      <trans-unit id="filter.tablist.aria-label" datatype="html">
+        <source>Filter tasks by status</source>
+        <target state="translated">تصفية المهام حسب الحالة</target>
+      </trans-unit>
+      <trans-unit id="filter.status.all" datatype="html">
+        <source>All</source>
+        <target state="translated">الكل</target>
+      </trans-unit>
+      <trans-unit id="filter.priority.all" datatype="html">
+        <source>All</source>
+        <target state="translated">الكل</target>
+      </trans-unit>
+      <trans-unit id="filter.priority.aria-label" datatype="html">
+        <source>Filter by priority</source>
+        <target state="translated">تصفية حسب الأولوية</target>
+      </trans-unit>
+      <trans-unit id="filter.priority.listbox.aria-label" datatype="html">
+        <source>Priority options</source>
+        <target state="translated">خيارات الأولوية</target>
+      </trans-unit>
+      <trans-unit id="filter.assignee.aria-label" datatype="html">
+        <source>Filter by assignee</source>
+        <target state="translated">تصفية حسب المُكلَّف</target>
+      </trans-unit>
+      <trans-unit id="filter.assignee.listbox.aria-label" datatype="html">
+        <source>Assignee options</source>
+        <target state="translated">خيارات المُكلَّف</target>
+      </trans-unit>
+      <trans-unit id="filter.all" datatype="html">
+        <source>All</source>
+        <target state="translated">الكل</target>
+      </trans-unit>
+      <trans-unit id="filter.assignee.default" datatype="html">
+        <source>Assignee</source>
+        <target state="translated">المُكلَّف</target>
+      </trans-unit>
+      <trans-unit id="filter.new-task" datatype="html">
+        <source>+ New Task</source>
+        <target state="translated">+ مهمة جديدة</target>
+      </trans-unit>
+
+      <!-- ── Task form modal ───────────────────────────────────────────────── -->
+      <trans-unit id="modal.close.aria-label" datatype="html">
+        <source>Close</source>
+        <target state="translated">إغلاق</target>
+      </trans-unit>
+      <trans-unit id="task-form.label.title" datatype="html">
+        <source>Title</source>
+        <target state="translated">العنوان</target>
+      </trans-unit>
+      <trans-unit id="task-form.placeholder.title" datatype="html">
+        <source>Enter task title</source>
+        <target state="translated">أدخل عنوان المهمة</target>
+      </trans-unit>
+      <trans-unit id="task-form.error.title-required" datatype="html">
+        <source>Title is required.</source>
+        <target state="translated">العنوان مطلوب.</target>
+      </trans-unit>
+      <trans-unit id="task-form.error.title-minlength" datatype="html">
+        <source>Title must be at least 3 characters.</source>
+        <target state="translated">يجب أن يتكون العنوان من 3 أحرف على الأقل.</target>
+      </trans-unit>
+      <trans-unit id="task-form.error.title-whitespace" datatype="html">
+        <source>Title must not start or end with spaces.</source>
+        <target state="translated">يجب ألا يبدأ العنوان أو ينتهي بمسافات.</target>
+      </trans-unit>
+      <trans-unit id="task-form.label.description" datatype="html">
+        <source>Description</source>
+        <target state="translated">الوصف</target>
+      </trans-unit>
+      <trans-unit id="task-form.placeholder.description" datatype="html">
+        <source>Describe the task…</source>
+        <target state="translated">صف المهمة…</target>
+      </trans-unit>
+      <trans-unit id="task-form.error.desc-required" datatype="html">
+        <source>Description is required.</source>
+        <target state="translated">الوصف مطلوب.</target>
+      </trans-unit>
+      <trans-unit id="task-form.error.desc-minlength" datatype="html">
+        <source>Description must be at least 10 characters.</source>
+        <target state="translated">يجب أن يتكون الوصف من 10 أحرف على الأقل.</target>
+      </trans-unit>
+      <trans-unit id="task-form.label.status" datatype="html">
+        <source>Status</source>
+        <target state="translated">الحالة</target>
+      </trans-unit>
+      <trans-unit id="task-form.label.priority" datatype="html">
+        <source>Priority</source>
+        <target state="translated">الأولوية</target>
+      </trans-unit>
+      <trans-unit id="task-form.label.due-date" datatype="html">
+        <source>Due Date</source>
+        <target state="translated">تاريخ الاستحقاق</target>
+      </trans-unit>
+      <trans-unit id="task-form.error.due-required" datatype="html">
+        <source>Due date is required.</source>
+        <target state="translated">تاريخ الاستحقاق مطلوب.</target>
+      </trans-unit>
+      <trans-unit id="task-form.error.due-past" datatype="html">
+        <source>Due date cannot be in the past.</source>
+        <target state="translated">لا يمكن أن يكون تاريخ الاستحقاق في الماضي.</target>
+      </trans-unit>
+      <trans-unit id="task-form.label.assignee" datatype="html">
+        <source>Assignee</source>
+        <target state="translated">المُكلَّف</target>
+      </trans-unit>
+      <trans-unit id="task-form.loading-users" datatype="html">
+        <source>Loading users…</source>
+        <target state="translated">جارٍ تحميل المستخدمين…</target>
+      </trans-unit>
+      <trans-unit id="task-form.select-assignee" datatype="html">
+        <source>Select an assignee</source>
+        <target state="translated">اختر مُكلَّفاً</target>
+      </trans-unit>
+      <trans-unit id="task-form.error.assignee-required" datatype="html">
+        <source>Assignee is required.</source>
+        <target state="translated">المُكلَّف مطلوب.</target>
+      </trans-unit>
+      <trans-unit id="task-form.label.tags" datatype="html">
+        <source>Tags</source>
+        <target state="translated">الوسوم</target>
+      </trans-unit>
+      <trans-unit id="task-form.hint.tags-max" datatype="html">
+        <source> (max 5)</source>
+        <target state="translated"> (الحد الأقصى 5)</target>
+      </trans-unit>
+      <trans-unit id="task-form.placeholder.tag" datatype="html">
+        <source>Add a tag and press Enter</source>
+        <target state="translated">أضف وسمًا واضغط Enter</target>
+      </trans-unit>
+      <trans-unit id="task-form.tag-input.aria-label" datatype="html">
+        <source>New tag</source>
+        <target state="translated">وسم جديد</target>
+      </trans-unit>
+      <trans-unit id="task-form.btn.add" datatype="html">
+        <source>Add</source>
+        <target state="translated">إضافة</target>
+      </trans-unit>
+      <trans-unit id="task-form.error.max-tags" datatype="html">
+        <source>Maximum 5 tags allowed.</source>
+        <target state="translated">الحد الأقصى 5 وسوم مسموح بها.</target>
+      </trans-unit>
+      <trans-unit id="task-form.btn.cancel" datatype="html">
+        <source>Cancel</source>
+        <target state="translated">إلغاء</target>
+      </trans-unit>
+      <trans-unit id="task-form.btn.save" datatype="html">
+        <source>Save Changes</source>
+        <target state="translated">حفظ التغييرات</target>
+      </trans-unit>
+      <trans-unit id="task-form.btn.create" datatype="html">
+        <source>Create Task</source>
+        <target state="translated">إنشاء مهمة</target>
+      </trans-unit>
+
+      <!-- ── Dashboard ─────────────────────────────────────────────────────── -->
+      <trans-unit id="dashboard.clear-activity" datatype="html">
+        <source>Clear activity</source>
+        <target state="translated">مسح النشاط</target>
+      </trans-unit>
+      <trans-unit id="dashboard.delete-dialog.title" datatype="html">
+        <source>Delete Task</source>
+        <target state="translated">حذف المهمة</target>
+      </trans-unit>
+      <trans-unit id="dashboard.delete-dialog.confirm" datatype="html">
+        <source>Delete</source>
+        <target state="translated">حذف</target>
+      </trans-unit>
+
+      <!-- ── Analytics ─────────────────────────────────────────────────────── -->
+      <trans-unit id="analytics.priority-title" datatype="html">
+        <source>Tasks by Priority</source>
+        <target state="translated">المهام حسب الأولوية</target>
+      </trans-unit>
+      <trans-unit id="analytics.status-title" datatype="html">
+        <source>Tasks by Status</source>
+        <target state="translated">المهام حسب الحالة</target>
+      </trans-unit>
+      <trans-unit id="analytics.priority-chart.aria-label" datatype="html">
+        <source>Donut chart: tasks by priority</source>
+        <target state="translated">مخطط دائري: المهام حسب الأولوية</target>
+      </trans-unit>
+      <trans-unit id="analytics.status-chart.aria-label" datatype="html">
+        <source>Bar chart: tasks by status</source>
+        <target state="translated">مخطط شريطي: المهام حسب الحالة</target>
+      </trans-unit>
+
+      <!-- ── Task card ──────────────────────────────────────────────────────── -->
+      <trans-unit id="task-card.menu.edit" datatype="html">
+        <source>Edit</source>
+        <target state="translated">تعديل</target>
+      </trans-unit>
+      <trans-unit id="task-card.menu.delete" datatype="html">
+        <source>Delete</source>
+        <target state="translated">حذف</target>
+      </trans-unit>
+
+    </body>
+  </file>
+</xliff>
