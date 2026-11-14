@@ -17,12 +17,12 @@ import {
   selectTasksLoading,
 } from '../../core/store/tasks/tasks.selectors';
 import { Task, TaskFormData, TaskPriority, TaskStatus } from '../../core/types/task.types';
-import { StatCardComponent } from '../../dashboard/components/stat-card/stat-card.component';
-import { TaskFilterBarComponent } from '../../dashboard/components/task-filter-bar/task-filter-bar.component';
-import { TaskBoardComponent } from '../../dashboard/components/tasks/task-board/task-board.component';
-import { TaskFormModalComponent } from '../../dashboard/components/task-form-modal/task-form-modal.component';
-import { AnalyticsComponent } from '../../dashboard/components/analytics/analytics.component';
-import { ActivityFeedComponent } from '../../dashboard/components/activity-feed/activity-feed.component';
+import { StatCardComponent } from './stat-card/stat-card.component';
+import { TaskFilterBarComponent } from './task-filter-bar/task-filter-bar.component';
+import { TaskBoardComponent } from './tasks/task-board/task-board.component';
+import { TaskFormModalComponent } from './task-form-modal/task-form-modal.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
+import { ActivityFeedComponent } from './activity-feed/activity-feed.component';
 import { ConfirmDialogComponent } from '../../shared/components/confirm-dialog/confirm-dialog.component';
 import { SkeletonComponent } from '../../shared/components/skeleton/skeleton.component';
 

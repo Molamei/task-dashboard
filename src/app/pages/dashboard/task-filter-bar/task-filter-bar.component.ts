@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { TaskPriority, TaskStatus } from '../../../core/types/task.types';
 import { PRIORITY_FILTER_OPTIONS, STATUS_FILTER_TABS } from '../../../core/types/constants';
-import { PriorityLabelPipe } from '../../pipes/priority-label.pipe';
+import { PriorityLabelPipe } from '../pipes/priority-label.pipe';
 
 type StatusFilter = TaskStatus | 'all';
 

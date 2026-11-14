@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Statistic } from '../../core/types/statistic.types';
+import { Statistic } from '../../../core/types/statistic.types';
 
 @Pipe({ name: 'changeText', standalone: true })
 export class ChangeTextPipe implements PipeTransform {

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { Statistic } from '../../../core/types/statistic.types';
-import { ChangeTextPipe } from '../../pipes/change-text.pipe';
+import { ChangeTextPipe } from '../pipes/change-text.pipe';
 
 @Component({
   selector: 'app-stat-card',
