@@ -1,0 +1,20 @@
+services:
+  task-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    image: task-dashboard:latest
+    container_name: task-dashboard
+    ports:
+      - "4200:80"
+    restart: unless-stopped
+    environment:
+      - NGINX_HOST=localhost
+      - NGINX_PORT=80
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s

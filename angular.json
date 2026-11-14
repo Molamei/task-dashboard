@@ -9,6 +9,15 @@
   "projects": {
     "task-dashboard": {
       "projectType": "application",
+      "i18n": {
+        "sourceLocale": "en-US",
+        "locales": {
+          "ar": {
+            "translation": "src/locale/messages.ar.xlf",
+            "baseHref": "/ar/"
+          }
+        }
+      },
       "schematics": {
         "@schematics/angular:component": {
           "style": "scss"
@@ -34,6 +43,7 @@
           },
           "configurations": {
             "production": {
+              "localize": true,
               "budgets": [
                 {
                   "type": "initial",
@@ -52,6 +62,9 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true
+            },
+            "ar": {
+              "localize": ["ar"]
             }
           },
           "defaultConfiguration": "production"
@@ -64,6 +77,9 @@
             },
             "development": {
               "buildTarget": "task-dashboard:build:development"
+            },
+            "ar": {
+              "buildTarget": "task-dashboard:build:development,ar"
             }
           },
           "defaultConfiguration": "development"
