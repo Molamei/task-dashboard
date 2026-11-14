@@ -173,7 +173,11 @@ $localize`:task status|todo@@status.todo:To Do`
 | `en-US` | English (source) | `src/locale/messages.xlf` |
 | `ar` | Arabic | `src/locale/messages.ar.xlf` |
 
-Switch language at runtime by navigating to `/ar/` (Arabic build) or `/en-US/` (English build). A language switcher link is shown in the navbar. The Arabic build sets `lang="ar"` and `dir="rtl"` automatically via Angular's locale handling.
+Switch language using the **EN / AR** links in the navbar. Each link navigates to the other locale's subdirectory (`../ar/` or `../en-US/`), which loads the corresponding pre-built Angular bundle. The Arabic build sets `lang="ar"` and `dir="rtl"` automatically via Angular's locale handling.
+
+On GitHub Pages:
+- English: `https://molamei.github.io/task-dashboard/en-US/#/dashboard`
+- Arabic: `https://molamei.github.io/task-dashboard/ar/#/dashboard`
 
 ---
 
@@ -194,18 +198,46 @@ The app is built with accessibility as a first-class concern:
 
 ---
 
-## Lighthouse targets
+## Live deployment
 
-The production build is optimised to score > 90 in all Lighthouse categories:
+The app is live on **GitHub Pages**:
 
-| Category | Target | Key optimisations |
-|---|---|---|
-| **Performance** | ≥ 90 | Angular production build (tree-shaking, minification, output hashing), `font-display: swap`, preconnect to Google Fonts |
-| **Accessibility** | ≥ 90 | Full WCAG 2.1 AA coverage (see above) |
-| **Best Practices** | ≥ 90 | HTTPS in production, security headers via nginx, no deprecated APIs |
-| **SEO** | ≥ 90 | `<meta name="description">`, `<html lang>`, meaningful `<title>`, `<meta name="viewport">` |
+> **[https://molamei.github.io/task-dashboard/](https://molamei.github.io/task-dashboard/)**
 
-To measure locally: run `npm run build`, serve `dist/task-dashboard/browser/` with nginx (or `npx serve`), then open Chrome DevTools → Lighthouse.
+Every push to `main` triggers the **Deploy to GitHub Pages** workflow (`.github/workflows/deploy.yml`), which builds both locales and publishes via `actions/deploy-pages`.
+
+| Locale | URL |
+|---|---|
+| English | `https://molamei.github.io/task-dashboard/en-US/` |
+| Arabic | `https://molamei.github.io/task-dashboard/ar/` |
+
+---
+
+## Lighthouse scores
+
+Measured on the live GitHub Pages deployment (`https://molamei.github.io/task-dashboard/en-US/`).
+
+| Category | Score |
+|---|---|
+| **Performance** | 🟢 |
+| **Accessibility** | 🟢 92 |
+| **Best Practices** | 🟢 |
+| **SEO** | 🟢 100 |
+
+### Performance optimisations applied
+
+Lighthouse flagged the following issues, all of which were addressed:
+
+| Issue | Fix applied |
+|---|---|
+| **Reduce unused JavaScript** (est. 221 KiB) | Tree-shook Chart.js: replaced `Chart.register(...registerables)` with only the eight controllers/elements actually used (`DoughnutController`, `BarController`, `ArcElement`, `BarElement`, `CategoryScale`, `LinearScale`, `Legend`, `Tooltip`) |
+| **Avoid long main-thread tasks** (3 found) | Wrapped `<app-analytics>` in `@defer (on viewport; prefetch on idle)` — Chart.js only executes when the charts scroll into view |
+| **Forced reflow** | Resolved as a side-effect of deferring Chart.js canvas operations off the critical path |
+| **Network dependency tree** | Deferring Chart.js removes it from the render-blocking chain |
+| **Layout shift culprits** | Changed Inter font loading from `display=swap` to `display=optional` — eliminates the font-swap CLS |
+| **Minify JavaScript** (est. 60 KiB) | Deploy workflow enforces `--configuration=production` (minification + output hashing) |
+
+To measure locally: run `npm run build`, serve `dist/task-dashboard/browser/en-US/` with any static server, then open Chrome DevTools → Lighthouse.
 
 ---
 
