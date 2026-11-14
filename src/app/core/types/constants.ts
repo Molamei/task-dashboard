@@ -24,6 +24,22 @@ export const TASK_STATUS_COLORS: Record<TaskStatus, string> = {
   done: '#388E3C',
 };
 
+export const STATUS_FILTER_TABS = [
+  { label: 'All', value: 'all' as const },
+  ...Object.entries(TASK_STATUS_LABELS).map(([value, label]) => ({
+    label,
+    value: value as TaskStatus,
+  })),
+];
+
+export const PRIORITY_FILTER_OPTIONS = [
+  { label: 'All', value: null as TaskPriority | null },
+  ...Object.entries(TASK_PRIORITY_LABELS).map(([value, label]) => ({
+    label,
+    value: value as TaskPriority,
+  })),
+];
+
 export const API_ENDPOINTS = {
   tasks: 'api/tasks',
   statistics: 'api/statistics',

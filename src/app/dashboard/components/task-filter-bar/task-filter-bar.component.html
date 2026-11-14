@@ -1,0 +1,41 @@
+<div class="filter-bar">
+  <div class="filter-bar__tabs">
+    @for (tab of tabs; track tab.value) {
+      <button
+        class="filter-bar__tab"
+        [class.filter-bar__tab--active]="activeStatus() === tab.value"
+        (click)="selectStatus(tab.value)"
+      >
+        {{ tab.label }}
+      </button>
+    }
+  </div>
+
+  <div class="filter-bar__actions">
+    <div class="filter-bar__priority-wrapper">
+      <button
+        class="filter-bar__priority-btn"
+        (click)="priorityDropdownOpen = !priorityDropdownOpen"
+      >
+        {{ activePriority() | priorityLabel }} ▾
+      </button>
+      @if (priorityDropdownOpen) {
+        <ul class="filter-bar__dropdown">
+          @for (p of priorities; track p.value) {
+            <li>
+              <button
+                class="filter-bar__dropdown-item"
+                [class.filter-bar__dropdown-item--active]="activePriority() === p.value"
+                (click)="selectPriority(p.value)"
+              >
+                {{ p.label }}
+              </button>
+            </li>
+          }
+        </ul>
+      }
+    </div>
+
+    <button class="filter-bar__new-task-btn" (click)="newTask.emit()">+ New Task</button>
+  </div>
+</div>

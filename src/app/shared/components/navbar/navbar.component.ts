@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, output, signal } from '@angular/core';
+
 @Component({
   selector: 'app-navbar',
   imports: [],
@@ -7,10 +8,10 @@ import { ChangeDetectionStrategy, Component, output, signal } from '@angular/cor
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
-  readonly searchQuery = signal('');
+  protected readonly searchQuery = signal('');
   readonly searchChange = output<string>();
 
-  onSearch(event: Event): void {
+  protected onSearch(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.searchQuery.set(value);
     this.searchChange.emit(value);

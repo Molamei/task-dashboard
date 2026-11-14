@@ -1,0 +1,10 @@
+<div class="stat-card">
+  <div class="stat-card__header">
+    <span class="stat-card__icon">{{ stat().icon }}</span>
+    <span class="stat-card__title">{{ stat().title }}</span>
+  </div>
+  <div class="stat-card__value">{{ stat().value }}</div>
+  <div class="stat-card__change" [class]="'stat-card__change--' + stat().changeType">
+    {{ stat() | changeText }}
+  </div>
+</div>

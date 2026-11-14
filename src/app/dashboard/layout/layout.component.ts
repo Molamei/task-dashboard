@@ -13,9 +13,9 @@ import { TaskActions } from '../../core/store/tasks/tasks.actions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
-  private store = inject(Store);
+  private readonly store = inject(Store);
 
-  onSearch(query: string): void {
+  protected onSearch(query: string): void {
     this.store.dispatch(TaskActions.setFilter({ filter: { search: query } }));
   }
 }

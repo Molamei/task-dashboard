@@ -41,6 +41,7 @@
     "@ngrx/store": "^21.1.1",
     "@ngrx/store-devtools": "^21.1.1",
     "angular-in-memory-web-api": "^0.21.0",
+    "bootstrap": "^5.3.9",
     "chart.js": "^4.6.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"

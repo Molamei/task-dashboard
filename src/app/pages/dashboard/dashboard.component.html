@@ -1,3 +1,16 @@
 <div class="dashboard">
-  <!-- Dashboard content goes here -->
+  <div class="stats-row d-flex gap-4">
+    @for (stat of statistics$ | async; track stat.id) {
+      <app-stat-card [stat]="stat" />
+    }
+  </div>
+
+  <app-task-filter-bar
+    class="mt-4"
+    [activeStatus]="activeStatus"
+    [activePriority]="activePriority"
+    (statusChange)="activeStatus = $event"
+    (priorityChange)="activePriority = $event"
+    (newTask)="onNewTask()"
+  />
 </div>
