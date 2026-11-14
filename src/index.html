@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Task Manager — Organize your team's work</title>
+    <title>Task Manager — Organize your team&#x2019;s work</title>
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
@@ -14,11 +14,26 @@
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
+    <!-- Inline critical styles to prevent FOUC before external CSS loads -->
+    <style>
+      body {
+        background-color: #f4f6f9;
+        color: #374151;
+        font-family:
+          'Inter',
+          -apple-system,
+          BlinkMacSystemFont,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+      }
+    </style>
+
     <!-- Preconnect to Google Fonts for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <!-- Fonts: display=swap prevents invisible text during load (Lighthouse FCP) -->
+    <!-- Fonts: CLI will inline @font-face in production (fonts.inline: true in angular.json) -->
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"

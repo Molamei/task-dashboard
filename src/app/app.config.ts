@@ -30,7 +30,7 @@ export const appConfig: ApplicationConfig = {
     importProvidersFrom(
       HttpClientInMemoryWebApiModule.forRoot(MockDbService, {
         dataEncapsulation: false,
-        delay: 300,
+        delay: 0,
         passThruUnknownUrl: true,
       }),
     ),

@@ -1,5 +1,12 @@
 @use '@angular/material' as mat;
-@import 'bootstrap/scss/bootstrap';
+
+/* Bootstrap replacements — only the two utilities actually used in templates */
+.mt-4 {
+  margin-top: 1.5rem !important;
+}
+.d-block {
+  display: block !important;
+}
 
 html {
   @include mat.theme(
