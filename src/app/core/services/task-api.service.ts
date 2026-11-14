@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { API_ENDPOINTS } from '../types/constants';
 import { StatisticsResponse } from '../types/statistic.types';
 import { Task, TaskFormData, TasksResponse } from '../types/task.types';
@@ -10,7 +11,12 @@ export class TaskApiService {
   private readonly http = inject(HttpClient);
 
   getTasks(): Observable<TasksResponse> {
-    return this.http.get<TasksResponse>(API_ENDPOINTS.tasks);
+    return this.http.get<Task[]>(API_ENDPOINTS.tasks).pipe(
+      map((tasks) => ({
+        tasks,
+        meta: { totalCount: tasks.length, lastUpdated: new Date().toISOString() },
+      })),
+    );
   }
 
   getTaskById(id: string): Observable<Task> {

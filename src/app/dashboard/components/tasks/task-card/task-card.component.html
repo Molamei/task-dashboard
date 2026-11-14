@@ -1,0 +1,58 @@
+<div
+  class="task-card"
+  [class.task-card--overdue]="task().isOverdue && task().priority === 'high'"
+  [style.border-left-color]="
+    task().isOverdue && task().priority === 'high' ? priorityStyle().bg : null
+  "
+  [style.--hover-shadow]="hoverShadowColor()"
+>
+  <div class="task-card__header">
+    <span
+      class="priority-badge"
+      [style.background-color]="priorityStyle().bg"
+      [style.color]="priorityStyle().color"
+    >
+      {{ priorityLabel() }}
+    </span>
+    <button class="kebab-btn" type="button" aria-label="Task options">
+      <span>&#8942;</span>
+    </button>
+  </div>
+
+  <div class="task-card__body">
+    <h4 class="task-card__title">{{ task().title }}</h4>
+    <p class="task-card__description">{{ task().description }}</p>
+  </div>
+
+  <div class="task-card__meta">
+    <div
+      class="due-info"
+      [class.due-info--overdue]="dueInfo().type === 'overdue'"
+      [class.due-info--done]="dueInfo().type === 'done'"
+    >
+      @switch (dueInfo().type) {
+        @case ('overdue') {
+          <span class="due-icon">&#9888;</span>
+        }
+        @case ('done') {
+          <span class="due-icon">&#10003;</span>
+        }
+        @default {
+          <span class="due-icon">&#128197;</span>
+        }
+      }
+      <span>{{ dueInfo().label }}</span>
+    </div>
+
+    @if (task().tags.length) {
+      <span class="tag">{{ task().tags[0] }}</span>
+    }
+  </div>
+
+  <div class="task-card__footer">
+    <span class="avatar" [style.background-color]="avatarColor()">
+      {{ task().assignee.avatar }}
+    </span>
+    <span class="assignee-name">{{ assigneeName() }}</span>
+  </div>
+</div>

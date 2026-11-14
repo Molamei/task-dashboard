@@ -9,8 +9,14 @@
     class="mt-4"
     [activeStatus]="activeStatus"
     [activePriority]="activePriority"
-    (statusChange)="activeStatus = $event"
-    (priorityChange)="activePriority = $event"
+    (statusChange)="onStatusChange($event)"
+    (priorityChange)="onPriorityChange($event)"
     (newTask)="onNewTask()"
   />
+
+  @if (filteredTasks$ | async; as tasks) {
+    @if (taskCounts$ | async; as counts) {
+      <app-task-board class="mt-4 d-block" [tasks]="tasks" [counts]="counts" />
+    }
+  }
 </div>
