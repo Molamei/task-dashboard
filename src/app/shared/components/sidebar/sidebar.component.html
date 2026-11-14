@@ -1,0 +1,37 @@
+<aside class="sidebar">
+  <nav class="sidebar__nav" aria-label="Main navigation">
+    <ul class="sidebar__list">
+      <li class="sidebar__item sidebar__item--active" aria-current="page">
+        <span class="sidebar__icon sidebar__icon--sm" aria-hidden="true">📊</span>
+        <span class="sidebar__label">Dashboard</span>
+      </li>
+
+      <li class="sidebar__item" tabindex="0">
+        <span class="sidebar__icon" aria-hidden="true">✅</span>
+        <span class="sidebar__label">Tasks</span>
+      </li>
+
+      <li class="sidebar__item" tabindex="0">
+        <span class="sidebar__icon" aria-hidden="true">📅</span>
+        <span class="sidebar__label">Calendar</span>
+      </li>
+
+      <li class="sidebar__item" tabindex="0">
+        <span class="sidebar__icon" aria-hidden="true">📈</span>
+        <span class="sidebar__label">Analytics</span>
+      </li>
+
+      <li class="sidebar__item" tabindex="0">
+        <span class="sidebar__icon" aria-hidden="true">👥</span>
+        <span class="sidebar__label">Team</span>
+      </li>
+
+      <li class="sidebar__item" tabindex="0">
+        <span class="sidebar__icon" aria-hidden="true">⚙️</span>
+        <span class="sidebar__label">Settings</span>
+      </li>
+    </ul>
+  </nav>
+
+  <app-button label="+ New Task" (clicked)="newTask.emit()" />
+</aside>
