@@ -43,4 +43,5 @@ export const PRIORITY_FILTER_OPTIONS = [
 export const API_ENDPOINTS = {
   tasks: 'api/tasks',
   statistics: 'api/statistics',
+  users: 'api/users',
 } as const;

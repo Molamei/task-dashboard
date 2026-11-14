@@ -3,6 +3,7 @@ import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
 import { Observable } from 'rxjs';
 import tasksData from '../../../assets/data/tasks.json';
 import statisticsData from '../../../assets/data/statistics.json';
+import usersData from '../../../assets/data/users.json';
 
 @Injectable({ providedIn: 'root' })
 export class MockDbService implements InMemoryDbService {
@@ -10,6 +11,7 @@ export class MockDbService implements InMemoryDbService {
     return {
       tasks: tasksData.tasks,
       statistics: [statisticsData],
+      users: usersData.users,
     };
   }
 

@@ -8,6 +8,7 @@ import {
   output,
   signal,
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   AbstractControl,
   FormArray,
@@ -16,7 +17,14 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Task, TaskFormData, TaskPriority, TaskStatus } from '../../../core/types/task.types';
+import { UserApiService } from '../../../core/services/user-api.service';
+import {
+  Assignee,
+  Task,
+  TaskFormData,
+  TaskPriority,
+  TaskStatus,
+} from '../../../core/types/task.types';
 import { TASK_PRIORITY_LABELS, TASK_STATUS_LABELS } from '../../../core/types/constants';
 
 // --- Custom Validators ---
@@ -50,6 +58,7 @@ function maxTagsValidator(max: number) {
 })
 export class TaskFormModalComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
+  private readonly userApiService = inject(UserApiService);
 
   readonly task = input<Task | null>(null);
   readonly saved = output<TaskFormData>();
@@ -66,6 +75,10 @@ export class TaskFormModalComponent implements OnInit {
     TASK_PRIORITY_LABELS,
   ).map(([value, label]) => ({ value: value as TaskPriority, label }));
 
+  protected readonly users = toSignal(this.userApiService.getUsers(), {
+    initialValue: [] as Assignee[],
+  });
+
   protected readonly newTagValue = signal('');
   protected readonly submitted = signal(false);
 
@@ -78,7 +91,7 @@ export class TaskFormModalComponent implements OnInit {
     status: ['todo' as TaskStatus, Validators.required],
     priority: ['medium' as TaskPriority, Validators.required],
     dueDate: ['', [Validators.required, futureDateValidator]],
-    assigneeName: ['', [Validators.required, noLeadingTrailingWhitespaceValidator]],
+    assigneeId: ['', Validators.required],
     tags: this.fb.array<string>([], maxTagsValidator(5)),
   });
 
@@ -95,7 +108,7 @@ export class TaskFormModalComponent implements OnInit {
         status: task.status,
         priority: task.priority,
         dueDate: task.dueDate,
-        assigneeName: task.assignee.name,
+        assigneeId: task.assignee.id,
       });
       task.tags.forEach((tag) => this.tagsArray.push(this.fb.control(tag)));
     }
@@ -136,7 +149,7 @@ export class TaskFormModalComponent implements OnInit {
       status: raw.status!,
       priority: raw.priority!,
       dueDate: raw.dueDate!,
-      assigneeName: raw.assigneeName!,
+      assigneeId: raw.assigneeId!,
       tags: (raw.tags as string[]) ?? [],
     };
     this.saved.emit(formData);

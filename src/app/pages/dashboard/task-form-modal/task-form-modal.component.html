@@ -120,23 +120,25 @@
         <label class="field__label" for="task-assignee"
           >Assignee <span class="field__required">*</span></label
         >
-        <input
+        <select
           id="task-assignee"
-          class="field__input"
-          [class.field__input--error]="
-            hasError('assigneeName', 'required') || hasError('assigneeName', 'whitespace')
-          "
-          type="text"
-          placeholder="Enter assignee name"
-          formControlName="assigneeName"
+          class="field__input field__select"
+          [class.field__input--error]="hasError('assigneeId', 'required')"
+          [class.field__loading]="users().length === 0"
+          formControlName="assigneeId"
           aria-required="true"
-        />
-        @if (hasError('assigneeName', 'required')) {
-          <span class="field__error" role="alert">Assignee name is required.</span>
-        } @else if (hasError('assigneeName', 'whitespace')) {
-          <span class="field__error" role="alert"
-            >Assignee name must not start or end with spaces.</span
-          >
+        >
+          @if (users().length === 0) {
+            <option value="">Loading users…</option>
+          } @else {
+            <option value="" disabled>Select an assignee</option>
+            @for (user of users(); track user.id) {
+              <option [value]="user.id">{{ user.name }}</option>
+            }
+          }
+        </select>
+        @if (hasError('assigneeId', 'required')) {
+          <span class="field__error" role="alert">Assignee is required.</span>
         }
       </div>
 

@@ -5,7 +5,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { filter, switchMap, take } from 'rxjs/operators';
 import { API_ENDPOINTS } from '../types/constants';
 import { StatisticsResponse } from '../types/statistic.types';
-import { Task, TaskFormData, TasksResponse } from '../types/task.types';
+import { Assignee, Task, TaskFormData, TasksResponse } from '../types/task.types';
 
 @Injectable({ providedIn: 'root' })
 export class TaskApiService {
@@ -67,62 +67,51 @@ export class TaskApiService {
   }
 
   createTask(formData: TaskFormData): Observable<Task> {
-    const now = new Date().toISOString();
-    const name = formData.assigneeName.trim();
-    const initials = name
-      .split(' ')
-      .filter(Boolean)
-      .map((w) => w[0].toUpperCase())
-      .join('')
-      .slice(0, 2);
-
-    // Client-generated id: angular-in-memory-web-api fails to auto-generate ids
-    // for collections whose existing ids are non-numeric strings (e.g. "task-001").
-    const task: Task = {
-      id: `task-${Date.now()}`,
-      title: formData.title,
-      description: formData.description,
-      status: formData.status,
-      priority: formData.priority,
-      dueDate: formData.dueDate,
-      assignee: { id: `user-${Date.now()}`, name, avatar: initials || '?', email: '' },
-      tags: formData.tags,
-      isOverdue: false,
-      createdAt: now,
-      updatedAt: now,
-    };
-    return this.http.post<Task>(API_ENDPOINTS.tasks, task);
+    return this.http.get<Assignee>(`${API_ENDPOINTS.users}/${formData.assigneeId}`).pipe(
+      switchMap((assignee) => {
+        const now = new Date().toISOString();
+        // Client-generated id: angular-in-memory-web-api fails to auto-generate ids
+        // for collections whose existing ids are non-numeric strings (e.g. "task-001").
+        const task: Task = {
+          id: `task-${Date.now()}`,
+          title: formData.title,
+          description: formData.description,
+          status: formData.status,
+          priority: formData.priority,
+          dueDate: formData.dueDate,
+          assignee,
+          tags: formData.tags,
+          isOverdue: false,
+          createdAt: now,
+          updatedAt: now,
+        };
+        return this.http.post<Task>(API_ENDPOINTS.tasks, task);
+      }),
+    );
   }
 
   /** Sends the full merged entity via PUT to avoid wiping existing fields. */
   updateTask(id: string, existing: Task, formData: Partial<TaskFormData>): Observable<Task> {
-    const rawName = formData.assigneeName?.trim();
-    const assignee = rawName
-      ? {
-          ...existing.assignee,
-          name: rawName,
-          avatar:
-            rawName
-              .split(' ')
-              .filter(Boolean)
-              .map((w) => w[0].toUpperCase())
-              .join('')
-              .slice(0, 2) || '?',
-        }
-      : existing.assignee;
+    const resolveAssignee$ = formData.assigneeId
+      ? this.http.get<Assignee>(`${API_ENDPOINTS.users}/${formData.assigneeId}`)
+      : of(existing.assignee);
 
-    const updatedTask: Task = {
-      ...existing,
-      title: formData.title ?? existing.title,
-      description: formData.description ?? existing.description,
-      status: formData.status ?? existing.status,
-      priority: formData.priority ?? existing.priority,
-      dueDate: formData.dueDate ?? existing.dueDate,
-      assignee,
-      tags: formData.tags ?? existing.tags,
-      updatedAt: new Date().toISOString(),
-    };
-    return this.http.put<Task>(`${API_ENDPOINTS.tasks}/${id}`, updatedTask);
+    return resolveAssignee$.pipe(
+      switchMap((assignee) => {
+        const updatedTask: Task = {
+          ...existing,
+          title: formData.title ?? existing.title,
+          description: formData.description ?? existing.description,
+          status: formData.status ?? existing.status,
+          priority: formData.priority ?? existing.priority,
+          dueDate: formData.dueDate ?? existing.dueDate,
+          assignee,
+          tags: formData.tags ?? existing.tags,
+          updatedAt: new Date().toISOString(),
+        };
+        return this.http.put<Task>(`${API_ENDPOINTS.tasks}/${id}`, updatedTask);
+      }),
+    );
   }
 
   deleteTask(id: string): Observable<void> {

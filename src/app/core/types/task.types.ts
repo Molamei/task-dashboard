@@ -44,6 +44,6 @@ export interface TaskFormData {
   status: TaskStatus;
   priority: TaskPriority;
   dueDate: string;
-  assigneeName: string;
+  assigneeId: string;
   tags: string[];
 }
