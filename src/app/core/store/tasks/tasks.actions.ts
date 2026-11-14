@@ -13,7 +13,7 @@ export const TaskActions = createActionGroup({
     'Create Task Success': props<{ task: Task }>(),
     'Create Task Failure': props<{ error: string }>(),
 
-    'Update Task': props<{ id: string; formData: Partial<TaskFormData> }>(),
+    'Update Task': props<{ id: string; existing: Task; formData: Partial<TaskFormData> }>(),
     'Update Task Success': props<{ task: Task }>(),
     'Update Task Failure': props<{ error: string }>(),
 
