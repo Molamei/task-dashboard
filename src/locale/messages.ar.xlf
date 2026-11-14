@@ -288,6 +288,14 @@
         <source>Create Task</source>
         <target state="translated">إنشاء مهمة</target>
       </trans-unit>
+      <trans-unit id="task-form.title.create" datatype="html">
+        <source>Create Task</source>
+        <target state="translated">إنشاء مهمة</target>
+      </trans-unit>
+      <trans-unit id="task-form.title.edit" datatype="html">
+        <source>Edit Task</source>
+        <target state="translated">تعديل المهمة</target>
+      </trans-unit>
 
       <!-- ── Dashboard ─────────────────────────────────────────────────────── -->
       <trans-unit id="dashboard.clear-activity" datatype="html">
@@ -301,6 +309,10 @@
       <trans-unit id="dashboard.delete-dialog.confirm" datatype="html">
         <source>Delete</source>
         <target state="translated">حذف</target>
+      </trans-unit>
+      <trans-unit id="dashboard.delete-dialog.message" datatype="html">
+        <source>Are you sure you want to delete "<x id="taskTitle" equiv-text="task.title"/>"? This action cannot be undone.</source>
+        <target state="translated">هل أنت متأكد من حذف "<x id="taskTitle" equiv-text="task.title"/>"؟ لا يمكن التراجع عن هذا الإجراء.</target>
       </trans-unit>
 
       <!-- ── Analytics ─────────────────────────────────────────────────────── -->

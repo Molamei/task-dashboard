@@ -1,5 +1,13 @@
 import { AsyncPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, effect, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  effect,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { TaskModalService } from '../../core/services/task-modal.service';
 import { UserApiService } from '../../core/services/user-api.service';
 import { Store } from '@ngrx/store';
@@ -105,6 +113,12 @@ export class DashboardComponent implements OnInit {
   protected readonly modalMode = signal<ModalMode>(null);
   protected readonly taskToEdit = signal<Task | null>(null);
   protected readonly taskToDelete = signal<Task | null>(null);
+
+  protected readonly deleteMessage = computed(() => {
+    const task = this.taskToDelete();
+    if (!task) return '';
+    return $localize`:Dashboard|Delete confirmation@@dashboard.delete-dialog.message:Are you sure you want to delete "${task.title}:taskTitle:"? This action cannot be undone.`;
+  });
 
   public ngOnInit(): void {
     this.store.dispatch(StatisticsActions.loadStatistics());

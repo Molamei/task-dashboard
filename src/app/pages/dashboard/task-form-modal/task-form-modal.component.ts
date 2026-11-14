@@ -65,7 +65,11 @@ export class TaskFormModalComponent implements OnInit {
   readonly closed = output<void>();
 
   protected readonly isEdit = computed(() => !!this.task());
-  protected readonly title = computed(() => (this.isEdit() ? 'Edit Task' : 'Create Task'));
+  protected readonly title = computed(() =>
+    this.isEdit()
+      ? $localize`:Task form|Edit modal title@@task-form.title.edit:Edit Task`
+      : $localize`:Task form|Create modal title@@task-form.title.create:Create Task`,
+  );
 
   protected readonly statuses: { label: string; value: TaskStatus }[] = Object.entries(
     TASK_STATUS_LABELS,

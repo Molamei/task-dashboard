@@ -288,6 +288,14 @@
         <source>Create Task</source>
         <note priority="1" from="description">Task form|Create task button</note>
       </trans-unit>
+      <trans-unit id="task-form.title.create" datatype="html">
+        <source>Create Task</source>
+        <note priority="1" from="description">Task form|Create modal title</note>
+      </trans-unit>
+      <trans-unit id="task-form.title.edit" datatype="html">
+        <source>Edit Task</source>
+        <note priority="1" from="description">Task form|Edit modal title</note>
+      </trans-unit>
 
       <!-- ── Dashboard ─────────────────────────────────────────────────────── -->
       <trans-unit id="dashboard.clear-activity" datatype="html">
@@ -301,6 +309,10 @@
       <trans-unit id="dashboard.delete-dialog.confirm" datatype="html">
         <source>Delete</source>
         <note priority="1" from="description">Dashboard|Delete dialog confirm button</note>
+      </trans-unit>
+      <trans-unit id="dashboard.delete-dialog.message" datatype="html">
+        <source>Are you sure you want to delete "<x id="taskTitle" equiv-text="task.title"/>"? This action cannot be undone.</source>
+        <note priority="1" from="description">Dashboard|Delete confirmation message</note>
       </trans-unit>
 
       <!-- ── Analytics ─────────────────────────────────────────────────────── -->

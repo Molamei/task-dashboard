@@ -85,11 +85,7 @@
   <app-confirm-dialog
     title="Delete Task"
     i18n-title="Dashboard|Delete dialog title@@dashboard.delete-dialog.title"
-    [message]="
-      'Are you sure you want to delete &quot;' +
-      taskToDelete()!.title +
-      '&quot;? This action cannot be undone.'
-    "
+    [message]="deleteMessage()"
     confirmLabel="Delete"
     i18n-confirmLabel="Dashboard|Delete dialog confirm button@@dashboard.delete-dialog.confirm"
     (confirmed)="onConfirmDelete()"
