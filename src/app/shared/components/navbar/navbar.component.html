@@ -1,0 +1,24 @@
+<nav class="navbar" role="banner">
+  <div class="navbar__logo">
+    <div class="navbar__logo-icon" aria-hidden="true">📋</div>
+    <span class="navbar__logo-text">Task Manager</span>
+  </div>
+
+  <div class="navbar__search" role="search">
+    <span class="navbar__search-icon" aria-hidden="true">🔍</span>
+    <input
+      class="navbar__search-input"
+      type="search"
+      placeholder="Search tasks..."
+      [value]="searchQuery()"
+      (input)="onSearch($event)"
+      aria-label="Search tasks"
+    />
+  </div>
+
+  <div class="navbar__actions">
+    <button class="navbar__bell" aria-label="Notifications">🔔</button>
+
+    <div class="navbar__avatar" role="img" aria-label="User profile: John Doe">JD</div>
+  </div>
+</nav>
