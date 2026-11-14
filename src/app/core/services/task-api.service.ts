@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, httpResource } from '@angular/common/http';
+import { inject, Injectable, Injector } from '@angular/core';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { Observable, of, throwError } from 'rxjs';
+import { filter, switchMap, take } from 'rxjs/operators';
 import { API_ENDPOINTS } from '../types/constants';
 import { StatisticsResponse } from '../types/statistic.types';
 import { Task, TaskFormData, TasksResponse } from '../types/task.types';
@@ -9,13 +10,55 @@ import { Task, TaskFormData, TasksResponse } from '../types/task.types';
 @Injectable({ providedIn: 'root' })
 export class TaskApiService {
   private readonly http = inject(HttpClient);
+  private readonly injector = inject(Injector);
 
+  /**
+   * Signal-based HTTP resources (Angular 21). Each resource fires its GET request
+   * immediately and exposes the result as signals (.value, .isLoading, .error).
+   * Mutations call .reload() after completing so the resource stays in sync.
+   */
+  readonly tasksResource = httpResource<Task[]>(() => API_ENDPOINTS.tasks);
+  readonly statisticsResource = httpResource<StatisticsResponse>(() => API_ENDPOINTS.statistics);
+
+  /**
+   * Observable bridge for NgRx Effects. Calls reload() to ensure fresh data, then
+   * waits for the resource to finish loading before emitting exactly once.
+   */
   getTasks(): Observable<TasksResponse> {
-    return this.http.get<Task[]>(API_ENDPOINTS.tasks).pipe(
-      map((tasks) => ({
-        tasks,
-        meta: { totalCount: tasks.length, lastUpdated: new Date().toISOString() },
-      })),
+    if (!this.tasksResource.isLoading()) {
+      this.tasksResource.reload();
+    }
+    return toObservable(this.tasksResource.isLoading, { injector: this.injector }).pipe(
+      filter((loading) => !loading),
+      take(1),
+      switchMap(() => {
+        const error = this.tasksResource.error();
+        if (error) {
+          return throwError(() => (error instanceof Error ? error : new Error(String(error))));
+        }
+        const tasks = this.tasksResource.value()!;
+        return of({
+          tasks,
+          meta: { totalCount: tasks.length, lastUpdated: new Date().toISOString() },
+        });
+      }),
+    );
+  }
+
+  getStatistics(): Observable<StatisticsResponse> {
+    if (!this.statisticsResource.isLoading()) {
+      this.statisticsResource.reload();
+    }
+    return toObservable(this.statisticsResource.isLoading, { injector: this.injector }).pipe(
+      filter((loading) => !loading),
+      take(1),
+      switchMap(() => {
+        const error = this.statisticsResource.error();
+        if (error) {
+          return throwError(() => (error instanceof Error ? error : new Error(String(error))));
+        }
+        return of(this.statisticsResource.value()!);
+      }),
     );
   }
 
@@ -33,8 +76,8 @@ export class TaskApiService {
       .join('')
       .slice(0, 2);
 
-    // Provide a client-generated id: angular-in-memory-web-api throws when it tries
-    // to auto-generate ids for collections with non-numeric existing ids (e.g. "task-001").
+    // Client-generated id: angular-in-memory-web-api fails to auto-generate ids
+    // for collections whose existing ids are non-numeric strings (e.g. "task-001").
     const task: Task = {
       id: `task-${Date.now()}`,
       title: formData.title,
@@ -84,9 +127,5 @@ export class TaskApiService {
 
   deleteTask(id: string): Observable<void> {
     return this.http.delete<void>(`${API_ENDPOINTS.tasks}/${id}`);
-  }
-
-  getStatistics(): Observable<StatisticsResponse> {
-    return this.http.get<StatisticsResponse>(API_ENDPOINTS.statistics);
   }
 }
