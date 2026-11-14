@@ -6,8 +6,25 @@
       <span class="column-count">{{ counts().todo }}</span>
     </div>
     <div class="column-body">
-      @for (task of todoTasks(); track task.id) {
-        <app-task-card [task]="task" />
+      @if (loading()) {
+        @for (_ of [1, 2]; track $index) {
+          <div class="task-skeleton">
+            <div class="task-skeleton__line task-skeleton__line--short"></div>
+            <div class="task-skeleton__line"></div>
+            <div class="task-skeleton__line task-skeleton__line--medium"></div>
+          </div>
+        }
+      } @else {
+        @for (task of todoTasks(); track task.id) {
+          <app-task-card
+            [task]="task"
+            (editTask)="editTask.emit($event)"
+            (deleteTask)="deleteTask.emit($event)"
+          />
+        }
+        @if (todoTasks().length === 0) {
+          <p class="column-empty">No tasks here.</p>
+        }
       }
     </div>
   </div>
@@ -19,8 +36,25 @@
       <span class="column-count">{{ counts().in_progress }}</span>
     </div>
     <div class="column-body">
-      @for (task of inProgressTasks(); track task.id) {
-        <app-task-card [task]="task" />
+      @if (loading()) {
+        @for (_ of [1, 2, 3]; track $index) {
+          <div class="task-skeleton">
+            <div class="task-skeleton__line task-skeleton__line--short"></div>
+            <div class="task-skeleton__line"></div>
+            <div class="task-skeleton__line task-skeleton__line--medium"></div>
+          </div>
+        }
+      } @else {
+        @for (task of inProgressTasks(); track task.id) {
+          <app-task-card
+            [task]="task"
+            (editTask)="editTask.emit($event)"
+            (deleteTask)="deleteTask.emit($event)"
+          />
+        }
+        @if (inProgressTasks().length === 0) {
+          <p class="column-empty">No tasks here.</p>
+        }
       }
     </div>
   </div>
@@ -32,8 +66,25 @@
       <span class="column-count">{{ counts().done }}</span>
     </div>
     <div class="column-body">
-      @for (task of doneTasks(); track task.id) {
-        <app-task-card [task]="task" />
+      @if (loading()) {
+        @for (_ of [1]; track $index) {
+          <div class="task-skeleton">
+            <div class="task-skeleton__line task-skeleton__line--short"></div>
+            <div class="task-skeleton__line"></div>
+            <div class="task-skeleton__line task-skeleton__line--medium"></div>
+          </div>
+        }
+      } @else {
+        @for (task of doneTasks(); track task.id) {
+          <app-task-card
+            [task]="task"
+            (editTask)="editTask.emit($event)"
+            (deleteTask)="deleteTask.emit($event)"
+          />
+        }
+        @if (doneTasks().length === 0) {
+          <p class="column-empty">No tasks here.</p>
+        }
       }
     </div>
   </div>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output } from '@angular/core';
 import { Task } from '../../../../core/types/task.types';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { TASK_STATUS_LABELS } from '../../../../core/types/constants';
@@ -20,6 +20,10 @@ export interface TaskCounts {
 export class TaskBoardComponent {
   readonly tasks = input.required<Task[]>();
   readonly counts = input.required<TaskCounts>();
+  readonly loading = input<boolean>(false);
+
+  readonly editTask = output<Task>();
+  readonly deleteTask = output<Task>();
 
   protected readonly statusLabels = TASK_STATUS_LABELS;
 

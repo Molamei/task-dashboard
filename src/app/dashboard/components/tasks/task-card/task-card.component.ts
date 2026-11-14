@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, output, signal } from '@angular/core';
 import { Task, TaskPriority, TaskStatus } from '../../../../core/types/task.types';
 
 const AVATAR_COLORS = ['#3B82F6', '#22C55E', '#F97316', '#8B5CF6', '#06B6D4'];
@@ -24,9 +24,12 @@ const PRIORITY_CONFIG: Record<TaskPriority, { bg: string; color: string }> = {
 })
 export class TaskCardComponent {
   readonly task = input.required<Task>();
+  readonly editTask = output<Task>();
+  readonly deleteTask = output<Task>();
+
+  protected readonly menuOpen = signal(false);
 
   protected readonly priorityStyle = computed(() => PRIORITY_CONFIG[this.task().priority]);
-
   protected readonly priorityLabel = computed(() => this.task().priority.toUpperCase());
 
   protected readonly avatarColor = computed(() => {
@@ -76,4 +79,25 @@ export class TaskCardComponent {
     if (diff < 14) return { label: 'Due in 1 week', type: 'due' as const };
     return { label: `Due in ${Math.floor(diff / 7)} weeks`, type: 'due' as const };
   });
+
+  protected toggleMenu(event: Event): void {
+    event.stopPropagation();
+    this.menuOpen.update((open) => !open);
+  }
+
+  protected onEdit(event: Event): void {
+    event.stopPropagation();
+    this.menuOpen.set(false);
+    this.editTask.emit(this.task());
+  }
+
+  protected onDelete(event: Event): void {
+    event.stopPropagation();
+    this.menuOpen.set(false);
+    this.deleteTask.emit(this.task());
+  }
+
+  protected closeMenu(): void {
+    this.menuOpen.set(false);
+  }
 }

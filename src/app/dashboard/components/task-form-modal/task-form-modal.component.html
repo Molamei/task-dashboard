@@ -1,0 +1,200 @@
+<div class="modal-overlay" role="dialog" aria-modal="true" [attr.aria-label]="title()">
+  <div class="modal">
+    <div class="modal__header">
+      <h2 class="modal__title">{{ title() }}</h2>
+      <button class="modal__close" type="button" aria-label="Close" (click)="closed.emit()">
+        ✕
+      </button>
+    </div>
+
+    <form class="modal__body" [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <!-- Title -->
+      <div class="field">
+        <label class="field__label" for="task-title"
+          >Title <span class="field__required">*</span></label
+        >
+        <input
+          id="task-title"
+          class="field__input"
+          [class.field__input--error]="
+            hasError('title', 'required') ||
+            hasError('title', 'minlength') ||
+            hasError('title', 'whitespace')
+          "
+          type="text"
+          placeholder="Enter task title"
+          formControlName="title"
+          aria-required="true"
+        />
+        @if (hasError('title', 'required')) {
+          <span class="field__error" role="alert">Title is required.</span>
+        } @else if (hasError('title', 'minlength')) {
+          <span class="field__error" role="alert">Title must be at least 3 characters.</span>
+        } @else if (hasError('title', 'whitespace')) {
+          <span class="field__error" role="alert">Title must not start or end with spaces.</span>
+        }
+      </div>
+
+      <!-- Description -->
+      <div class="field">
+        <label class="field__label" for="task-desc"
+          >Description <span class="field__required">*</span></label
+        >
+        <textarea
+          id="task-desc"
+          class="field__input field__textarea"
+          [class.field__input--error]="
+            hasError('description', 'required') || hasError('description', 'minlength')
+          "
+          placeholder="Describe the task..."
+          formControlName="description"
+          rows="3"
+          aria-required="true"
+        ></textarea>
+        @if (hasError('description', 'required')) {
+          <span class="field__error" role="alert">Description is required.</span>
+        } @else if (hasError('description', 'minlength')) {
+          <span class="field__error" role="alert">Description must be at least 10 characters.</span>
+        }
+      </div>
+
+      <!-- Status + Priority row -->
+      <div class="field-row">
+        <div class="field">
+          <label class="field__label" for="task-status"
+            >Status <span class="field__required">*</span></label
+          >
+          <select
+            id="task-status"
+            class="field__input field__select"
+            formControlName="status"
+            aria-required="true"
+          >
+            @for (s of statuses; track s.value) {
+              <option [value]="s.value">{{ s.label }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="task-priority"
+            >Priority <span class="field__required">*</span></label
+          >
+          <select
+            id="task-priority"
+            class="field__input field__select"
+            formControlName="priority"
+            aria-required="true"
+          >
+            @for (p of priorities; track p.value) {
+              <option [value]="p.value">{{ p.label }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <!-- Due Date -->
+      <div class="field">
+        <label class="field__label" for="task-due"
+          >Due Date <span class="field__required">*</span></label
+        >
+        <input
+          id="task-due"
+          class="field__input"
+          [class.field__input--error]="
+            hasError('dueDate', 'required') || hasError('dueDate', 'pastDate')
+          "
+          type="date"
+          formControlName="dueDate"
+          aria-required="true"
+        />
+        @if (hasError('dueDate', 'required')) {
+          <span class="field__error" role="alert">Due date is required.</span>
+        } @else if (hasError('dueDate', 'pastDate')) {
+          <span class="field__error" role="alert">Due date cannot be in the past.</span>
+        }
+      </div>
+
+      <!-- Assignee -->
+      <div class="field">
+        <label class="field__label" for="task-assignee"
+          >Assignee <span class="field__required">*</span></label
+        >
+        <input
+          id="task-assignee"
+          class="field__input"
+          [class.field__input--error]="
+            hasError('assigneeName', 'required') || hasError('assigneeName', 'whitespace')
+          "
+          type="text"
+          placeholder="Enter assignee name"
+          formControlName="assigneeName"
+          aria-required="true"
+        />
+        @if (hasError('assigneeName', 'required')) {
+          <span class="field__error" role="alert">Assignee name is required.</span>
+        } @else if (hasError('assigneeName', 'whitespace')) {
+          <span class="field__error" role="alert"
+            >Assignee name must not start or end with spaces.</span
+          >
+        }
+      </div>
+
+      <!-- Tags -->
+      <div class="field">
+        <label class="field__label" for="task-tag-input"
+          >Tags <span class="field__hint">(max 5)</span></label
+        >
+        <div class="tags-input">
+          <input
+            id="task-tag-input"
+            class="field__input tags-input__field"
+            type="text"
+            placeholder="Add a tag and press Enter"
+            [value]="newTagValue()"
+            (input)="newTagValue.set($any($event.target).value)"
+            (keydown)="onTagKeydown($event)"
+            [disabled]="tagsArray.length >= 5"
+            aria-label="New tag"
+          />
+          <button
+            type="button"
+            class="tags-input__add-btn"
+            [disabled]="tagsArray.length >= 5"
+            (click)="addTag()"
+          >
+            Add
+          </button>
+        </div>
+        @if (tagsArray.length > 0) {
+          <div class="tags-list">
+            @for (tag of tagsArray.controls; track $index) {
+              <span class="tag-chip">
+                {{ tag.value }}
+                <button
+                  type="button"
+                  class="tag-chip__remove"
+                  [attr.aria-label]="'Remove tag ' + tag.value"
+                  (click)="removeTag($index)"
+                >
+                  ✕
+                </button>
+              </span>
+            }
+          </div>
+        }
+        @if (tagsArray.errors?.['maxTags']) {
+          <span class="field__error" role="alert">Maximum 5 tags allowed.</span>
+        }
+      </div>
+
+      <!-- Actions -->
+      <div class="modal__footer">
+        <button class="btn btn--secondary" type="button" (click)="closed.emit()">Cancel</button>
+        <button class="btn btn--primary" type="submit">
+          {{ isEdit() ? 'Save Changes' : 'Create Task' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

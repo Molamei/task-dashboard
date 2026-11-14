@@ -5,6 +5,9 @@
     task().isOverdue && task().priority === 'high' ? priorityStyle().bg : null
   "
   [style.--hover-shadow]="hoverShadowColor()"
+  tabindex="0"
+  (click)="closeMenu()"
+  (keydown.escape)="closeMenu()"
 >
   <div class="task-card__header">
     <span
@@ -14,9 +17,38 @@
     >
       {{ priorityLabel() }}
     </span>
-    <button class="kebab-btn" type="button" aria-label="Task options">
-      <span>&#8942;</span>
-    </button>
+
+    <div class="kebab-wrapper">
+      <button
+        class="kebab-btn"
+        type="button"
+        [attr.aria-label]="'Task options for ' + task().title"
+        [attr.aria-expanded]="menuOpen()"
+        (click)="toggleMenu($event)"
+      >
+        <span aria-hidden="true">&#8942;</span>
+      </button>
+
+      @if (menuOpen()) {
+        <ul class="task-menu" role="menu">
+          <li role="none">
+            <button class="task-menu__item" role="menuitem" type="button" (click)="onEdit($event)">
+              <span aria-hidden="true">✎</span> Edit
+            </button>
+          </li>
+          <li role="none">
+            <button
+              class="task-menu__item task-menu__item--danger"
+              role="menuitem"
+              type="button"
+              (click)="onDelete($event)"
+            >
+              <span aria-hidden="true">✕</span> Delete
+            </button>
+          </li>
+        </ul>
+      }
+    </div>
   </div>
 
   <div class="task-card__body">
@@ -32,13 +64,13 @@
     >
       @switch (dueInfo().type) {
         @case ('overdue') {
-          <span class="due-icon">&#9888;</span>
+          <span class="due-icon" aria-hidden="true">&#9888;</span>
         }
         @case ('done') {
-          <span class="due-icon">&#10003;</span>
+          <span class="due-icon" aria-hidden="true">&#10003;</span>
         }
         @default {
-          <span class="due-icon">&#128197;</span>
+          <span class="due-icon" aria-hidden="true">&#128197;</span>
         }
       }
       <span>{{ dueInfo().label }}</span>
@@ -50,7 +82,12 @@
   </div>
 
   <div class="task-card__footer">
-    <span class="avatar" [style.background-color]="avatarColor()">
+    <span
+      class="avatar"
+      [style.background-color]="avatarColor()"
+      role="img"
+      [attr.aria-label]="task().assignee.name"
+    >
       {{ task().assignee.avatar }}
     </span>
     <span class="assignee-name">{{ assigneeName() }}</span>

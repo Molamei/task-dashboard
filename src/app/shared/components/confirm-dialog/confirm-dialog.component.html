@@ -1,0 +1,21 @@
+<div class="overlay" role="dialog" aria-modal="true" [attr.aria-label]="title()">
+  <div class="dialog">
+    <div class="dialog__icon" aria-hidden="true">⚠️</div>
+    <h3 class="dialog__title">{{ title() }}</h3>
+    <p class="dialog__message">{{ message() }}</p>
+    <div class="dialog__actions">
+      <button class="dialog__btn dialog__btn--cancel" type="button" (click)="cancelled.emit()">
+        {{ cancelLabel() }}
+      </button>
+      <button
+        class="dialog__btn"
+        [class.dialog__btn--danger]="danger()"
+        [class.dialog__btn--confirm]="!danger()"
+        type="button"
+        (click)="confirmed.emit()"
+      >
+        {{ confirmLabel() }}
+      </button>
+    </div>
+  </div>
+</div>
